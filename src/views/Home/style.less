@@ -1,2 +1,77 @@
-.Home {  
+.home {
+  color: #00193c;
+  header {
+    height: 100px;
+    border-bottom: 1px solid #000;
+  }
+  .global-data  {
+    padding: 0.3rem;
+    &>div {
+      padding: .3rem;
+      box-shadow: 0 0.08rem 0.266667rem 0 rgba(194, 200, 219, .3);
+      border-radius: 0.106667rem;
+      .header {
+        .title {
+          margin-bottom: .3rem;
+        }
+      }
+      .section {
+        display: flex;
+        flex-wrap: wrap;
+        .line {
+          margin-top: .21rem;
+          width: .02rem;
+          background-color: #d8d8d8;
+          height: 1rem;
+        }
+        .item {
+          width: 33%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: .2rem;
+          &:nth-of-type(1) .sum, &:nth-of-type(1) i {
+            color: #f74c30;
+          }
+          &:nth-of-type(2) .sum, &:nth-of-type(2) i {
+            color: #b5212b;
+          }
+          &:nth-of-type(3) .sum, &:nth-of-type(3) i {
+            color: #fe9317;
+          }
+          &:nth-of-type(4) .sum, &:nth-of-type(4) i {
+            color: #e10000;
+          }
+          &:nth-of-type(5) .sum, &:nth-of-type(5) i {
+            color: #15a582;
+          }
+          &:nth-of-type(6) .sum, &:nth-of-type(6) i {
+            color: #00193c;
+          }
+          .diff-val {
+            font-size: .2rem;
+          }
+          .sum {
+            font-size: .5rem;
+            font-weight: 700;
+          }
+          .title {
+            font-size: .25rem;
+            font-weight: 700;
+          }
+        }
+      }
+      .footer {
+        padding: .05rem;
+        font-size: 0.22rem;
+        font-weight: 700;
+        color: #a1a5ac;
+      }
+    }
+  }
+  .map-charts {
+    #myEcharts {
+      height: 8rem;
+    }
+  }
 }
