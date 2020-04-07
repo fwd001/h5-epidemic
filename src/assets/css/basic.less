@@ -1,0 +1,43 @@
+@import './baseVar.less';
+
+html, body {
+  user-select: none;
+}
+
+html {
+  font-size: calc(100vw / 7.5);
+}
+body {
+  font-size: @bodyFontSize;
+}
+
+// 单行显示
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+// 清楚浮动
+.clearfix:after{
+  content: " "; 
+  display: block; 
+  height: 0; 
+  clear: both; 
+  visibility: hidden;  
+}
+
+.clearfix {
+  /* 触发 hasLayout */ 
+  zoom: 1; 
+}
+
+
