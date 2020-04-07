@@ -1,15 +1,18 @@
 .home {
   color: #00193c;
+  a {
+    color: #4472c4;
+  }
   header {
-    height: 100px;
-    border-bottom: 1px solid #000;
+    height: 2rem;
+    background-color: #15a582;
   }
   .global-data  {
     padding: 0.3rem;
     &>div {
       padding: .3rem;
-      box-shadow: 0 0.08rem 0.266667rem 0 rgba(194, 200, 219, .3);
-      border-radius: 0.106667rem;
+      box-shadow: 0 0.1rem 0.3rem 0 rgba(194, 200, 219, .6);
+      border-radius: 0.15rem;
       .header {
         .title {
           margin-bottom: .3rem;
@@ -20,7 +23,7 @@
         flex-wrap: wrap;
         .line {
           margin-top: .21rem;
-          width: .02rem;
+          width: 1px;
           background-color: #d8d8d8;
           height: 1rem;
         }
@@ -30,24 +33,27 @@
           flex-direction: column;
           align-items: center;
           margin-bottom: .2rem;
-          &:nth-of-type(1) .sum, &:nth-of-type(1) i {
-            color: #f74c30;
-          }
-          &:nth-of-type(2) .sum, &:nth-of-type(2) i {
-            color: #b5212b;
-          }
-          &:nth-of-type(3) .sum, &:nth-of-type(3) i {
-            color: #fe9317;
-          }
-          &:nth-of-type(4) .sum, &:nth-of-type(4) i {
+          .sum, i {
             color: #e10000;
           }
-          &:nth-of-type(5) .sum, &:nth-of-type(5) i {
-            color: #15a582;
-          }
-          &:nth-of-type(6) .sum, &:nth-of-type(6) i {
-            color: #00193c;
-          }
+          // &:nth-of-type(1) .sum, &:nth-of-type(1) i {
+          //   color: #f74c30;
+          // }
+          // &:nth-of-type(2) .sum, &:nth-of-type(2) i {
+          //   color: #b5212b;
+          // }
+          // &:nth-of-type(3) .sum, &:nth-of-type(3) i {
+          //   color: #fe9317;
+          // }
+          // &:nth-of-type(4) .sum, &:nth-of-type(4) i {
+          //   color: #e10000;
+          // }
+          // &:nth-of-type(5) .sum, &:nth-of-type(5) i {
+          //   color: #15a582;
+          // }
+          // &:nth-of-type(6) .sum, &:nth-of-type(6) i {
+          //   color: #00193c;
+          // }
           .diff-val {
             font-size: .2rem;
           }
@@ -55,9 +61,16 @@
             font-size: .5rem;
             font-weight: 700;
           }
+          .area {
+            font-size: .2rem;
+          }
           .title {
             font-size: .25rem;
             font-weight: 700;
+            text-align: center;
+            p{
+              margin-bottom: .12rem;
+            }
           }
         }
       }
@@ -71,7 +84,7 @@
   }
   .map-charts {
     #myEcharts {
-      height: 8rem;
+      height: 8.5rem;
     }
   }
 }
