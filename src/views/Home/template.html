@@ -6,7 +6,7 @@
     <div class="global-data">
       <div>
         <div class="header">
-          <h3 class="title">全国疫情</h3>
+          <h3 class="title">全国动态</h3>
         </div>
         <div class="section">
           <div class="item">
@@ -76,14 +76,80 @@
           </div>
         </div>
         <div class="footer">
-          <span>截止2020.4.01 | <a href="javascript:;" @click="explanation = !explanation">数据说明</a></span>
-          <div v-show='explanation'>测试数据说明。。。。</div>
+          <span
+            >截止2020.4.01 |
+            <a href="javascript:;" @click="explanation = !explanation"
+              >数据说明</a
+            ></span
+          >
+          <div v-show="explanation">测试数据说明。。。。</div>
         </div>
       </div>
     </div>
     <div class="map-charts">
       <div id="myEcharts"></div>
+      <mu-container class="button-wrapper">
+        <mu-button small @click="showTip('宁波')" class='tipBtn'>宁波</mu-button>
+        <mu-button small @click="showTip('深圳')">深圳</mu-button>
+        <mu-button small @click="showTip('青岛')">青岛</mu-button>
+        <mu-button small @click="showTip('大连')">大连</mu-button>
+        <mu-button small @click="showTip('佛山')">佛山</mu-button>
+        <mu-button small @click="showTip('苏州')">苏州</mu-button>
+      </mu-container>
+      <div class="showTip" v-show='tipShow'>
+        <ul>
+          <li>佛山</li>
+          <li>宣讲人数：1223</li>
+          <li>达成率：123</li>
+          <li>宣传人数：123</li>
+          <li>达成率：123</li>
+        </ul>
+      </div>
+      <div class="btn-box">
+        <div
+          @click="chartIndex = 0"
+          :class="chartIndex === 0? 'btn-active': 'btn'"
+        >
+          <span>累计品质宣讲达成率</span>
+        </div>
+        <div
+          @click="chartIndex = 1"
+          :class="chartIndex === 1? 'btn-active': 'btn'"
+        >
+          <span>累计品质宣传达成率</span>
+        </div>
+      </div>
     </div>
-    <div class="line-charts">折线图数据</div>
+    <div class="line-charts">
+      <line-chart></line-chart>
+    </div>
+    <div class="table-o" style="margin-bottom: .5rem">
+      <table-o></table-o>
+    </div>
+    <div class="table-t" style="margin-bottom: .5rem">
+      <table-t></table-t>
+      <div style="text-align: center; padding: 5px;">
+        <mu-button flat color="primary" @click="openScroll = !openScroll">积分规则说明</mu-button>
+        <mu-dialog
+          title="积分规则说明"
+          width="360"
+          scrollable
+          :open.sync="openScroll"
+        >
+          <p>积分规则</p>
+          <p>测试内容</p>
+          <mu-button
+            slot="actions"
+            flat
+            color="primary"
+            @click="openScroll = false"
+            >好的</mu-button
+          >
+        </mu-dialog>
+      </div>
+    </div>
+    <div></div>
+    <footer>
+    </footer>
   </section>
 </div>

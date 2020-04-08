@@ -1,18 +1,20 @@
 import 'echarts/map/js/china'
 // import * as api from '../../api/index'
-import dataJson from './data'
+import dataJson from './mapdata'
+import TableO from './components/table-o'
+import TableT from './components/table-t'
+import lineChart from './components/lineChart'
 
 let myChart = null
 
 const tooltip = {
   triggerOn: 'click',
   formatter: function(e, t, n) {
-    console.log(e)
-    return `${e.name}
-      <p> 宣讲人数:${e.value || 0} </p>
-      <p> 达成率:${e.value || 0} </p>
-      <p> 宣传人数:${e.value || 0} </p>
-      <p> 达成率:${e.value || 0} </p>`
+    return `${e.name}<ul>
+      <li> 宣讲人数：${e.value || 0} </li>
+      <li> 达成率：${e.value || 0} </li>
+      <li> 宣传人数：${e.value || 0} </li>
+      <li> 达成率：${e.value || 0} </li></ul>`
   }
 }
 const visualMap = {
@@ -21,6 +23,7 @@ const visualMap = {
   left: 2,
   bottom: 10,
   showLabel: !0,
+  show: false,
   pieces: [
     {
       gt: 1000,
@@ -51,8 +54,7 @@ const visualMap = {
       label: '确诊1-9人',
       color: '#f8e850'
     }
-  ],
-  show: false
+  ]
 }
 
 const series = [
@@ -72,14 +74,27 @@ const series = [
 
 export default {
   name: 'Home',
-  components: {},
+  components: {
+    'table-o': TableO,
+    'table-t': TableT,
+    'line-chart': lineChart
+  },
   data() {
     return {
-      explanation: false
+      explanation: false,
+      chartIndex: 0,
+      openScroll: false,
+      tipShow: false
+    }
+  },
+  watch: {
+    // 切换地图数据
+    chartIndex(val, old) {
+      console.log(val, old)
     }
   },
   created() {
-    console.log(dataJson)
+    this.listenInit()
   },
   mounted() {
     this.mapInit()
@@ -100,7 +115,7 @@ export default {
             max: 2
           },
           zoom: 1.22,
-          top: 100,
+          top: '60px',
           label: {
             normal: {
               show: !0,
@@ -135,43 +150,35 @@ export default {
       myChart.setOption({
         series
       })
-      setTimeout(() => {
-        myChart.dispatchAction({
-          type: 'showTip',
-          // 可选，系列 index，可以是一个数组指定多个系列
-          seriesIndex: 0,
-          // 可选，系列名称，可以是一个数组指定多个系列
-          // seriesName: string|Array,
-          // 数据的 index，如果不指定也可以通过 name 属性根据名称指定数据
-          // dataIndex: number,
-          // 可选，数据名称，在有 dataIndex 的时候忽略
-          name: '北京'
-        })
-      }, 1000)
-      // api.getData().then(data => {
-      //   var res = data.data || ''
-      //   res = JSON.parse(res)
-      //   console.log(res)
-      //   var newArr = []
-      //   if (res) {
-      //     // 获取到各个省份的数据
-      //     var province = res.areaTree[0].children
-      //     for (var i = 0; i < province.length; i++) {
-      //       var json = {
-      //         name: province[i].name,
-      //         value: province[i].total.confirm
-      //       }
-      //       newArr.push(json)
-      //     }
-      //     console.log(newArr)
-      //     console.log(JSON.stringify(newArr))
-      //     // 使用指定的配置项和数据显示图表
-      //     series[0].data = newArr
-      //     myChart.setOption({
-      //       series
-      //     })
-      //   }
-      // })
+      // setTimeout(() => {
+      //   myChart.dispatchAction({
+      //     type: 'showTip',
+      //     // 可选，系列 index，可以是一个数组指定多个系列
+      //     seriesIndex: 0,
+      //     name: '北京'
+      //   })
+      // }, 200)
+    },
+    listenInit() {
+      document.addEventListener('click', (e) => {
+        if (!([].includes.call(e.target.classList, 'mu-ripple-wrapper'))) {
+          this.tipShow = false
+        }
+      })
+    },
+    showTip(name) {
+      myChart.dispatchAction({
+        type: 'hidTip',
+        // 可选，系列 index，可以是一个数组指定多个系列
+        seriesIndex: 0
+      })
+      myChart.dispatchAction({
+        type: 'hidTip',
+        // 可选，系列 index，可以是一个数组指定多个系列
+        seriesIndex: 0,
+        name: '北京'
+      })
+      this.tipShow = true
     }
   }
 }
