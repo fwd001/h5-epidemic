@@ -40,10 +40,12 @@
       width="360"
       transition="slide-bottom"
       fullscreen
+      data-mu-loading-overlay-color="rgba(0, 0, 0, .7)"
+      v-loading="loading"
       :open.sync="openFullscreen"
     >
       <mu-appbar color="primary" title="新增数据">
-        <mu-button slot="left" icon @click="openFullscreen = false">
+        <mu-button slot="left" icon @click="clear(); openFullscreen = false">
           <mu-icon value="close"></mu-icon>
         </mu-button>
         <mu-button slot="right" flat @click="submit">
@@ -229,7 +231,8 @@ export default {
         preachAmr: '', // 品质宣讲达成率
         propaganda: '', // 品质宣传人数
         propAmr: '' // 品质宣传达成率
-      }
+      },
+      loading: false
     }
   },
   methods: {
@@ -247,9 +250,14 @@ export default {
     submit() {
       this.$refs.form.validate().then(result => {
         if (result) {
+          this.loading = true
           console.log('form: ', this.validateForm)
-          this.clear()
-          this.openFullscreen = false
+          setTimeout(() => {
+            this.clear()
+            this.loading = false
+
+            this.openFullscreen = false
+          }, 500)
         }
       })
     },
