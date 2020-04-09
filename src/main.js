@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import echarts from 'echarts'
-import FastClick from 'fastclick'
+// import FastClick from 'fastclick'
 import VConsole from 'vconsole'
 import '@/assets/css/index.less'
 import './utils/ui'
@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // 解决移动端点击延迟
-FastClick.attach(document.body)
+// FastClick.attach(document.body)
 
 Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts

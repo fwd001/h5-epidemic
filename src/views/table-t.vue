@@ -1,15 +1,31 @@
 <template>
   <div>
-    <mu-button @click="$router.push({path: '/'})" color="green" style="margin: .2rem 0.4rem 0">
+    <mu-button
+      @click="$router.push({ path: '/' })"
+      color="green"
+      style="margin: .2rem 0.4rem 0"
+    >
       <mu-icon value="arrow_back" left></mu-icon>
     </mu-button>
     <h3>分公司活动积分情况</h3>
-    <mu-button
-      @click="openFullscreen = true"
-      color="primary"
-      style="margin: 0rem 0.45rem .2rem"
-      >新增</mu-button
-    >
+    <mu-row style="margin: 0rem 0.45rem .2rem">
+      <mu-col span="12" lg="4" sm="6">
+        <mu-button @click="openFullscreen = true" color="primary"
+          >新增</mu-button
+        >
+      </mu-col>
+      <mu-col span="12" lg="4" sm="6">
+        <mu-date-input
+          v-model="date"
+          label="选择日期"
+          format="YYYY 年 MM 月 DD 日"
+          value-format="YYYY-MM-DD"
+          label-float
+          full-width
+          @change="onDateChange"
+        ></mu-date-input>
+      </mu-col>
+    </mu-row>
     <div
       style="margin: 0rem 0.4rem 0; border: 1px solid rgba(204, 204, 204, 0.52);"
     >
@@ -29,7 +45,7 @@
           <td class="is-right">{{ scope.row.sum }}%</td>
           <td class="is-center">
             <mu-container class="button-wrapper">
-              <mu-button small flat color="primary">编辑</mu-button>
+              <mu-button small flat color="primary" @click="onEdit(scope.row.id)">编辑</mu-button>
               <mu-button small flat color="secondary" @click="onDelete"
                 >删除</mu-button
               >
@@ -123,10 +139,14 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
+
 export default {
   name: 'table-o',
   data() {
+    const date = dayjs().format('YYYY-MM-DD')
     return {
+      date,
       columns: [
         { title: '分公司', width: 90, name: 'branch' },
         {
@@ -168,6 +188,7 @@ export default {
       ],
       list: [
         {
+          id: 1,
           branch: '北京',
           preach: 159,
           propaganda: 6.0,
@@ -177,6 +198,7 @@ export default {
           sum: 1
         },
         {
+          id: 2,
           branch: '北京',
           preach: 237,
           propaganda: 9.0,
@@ -200,12 +222,18 @@ export default {
   },
   created() {
     // 获取数据
-    this.getDate()
+    this.getData()
   },
   methods: {
     // 获取数据
-    getDate() {
-
+    getData() {
+      const params = {
+        date: this.date
+      }
+      console.log({ params })
+    },
+    onEdit() {
+      console.log('编辑')
     },
     onDelete() {
       this.$confirm('确定要删除？', '提示', {
@@ -242,6 +270,9 @@ export default {
         media: '', // 媒体宣传得分(10)
         baise: '' // 基础工作得分(5)
       }
+    },
+    onDateChange(val) {
+      console.log(val)
     }
   }
 }

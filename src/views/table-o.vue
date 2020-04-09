@@ -1,15 +1,31 @@
 <template>
   <div>
-    <mu-button @click="$router.push({path: '/'})" color="green" style="margin: .2rem 0.4rem 0">
+    <mu-button
+      @click="$router.push({ path: '/' })"
+      color="green"
+      style="margin: .2rem 0.4rem 0"
+    >
       <mu-icon value="arrow_back" left></mu-icon>
     </mu-button>
     <h3>公司活动达成率</h3>
-    <mu-button
-      @click="openFullscreen = true"
-      color="primary"
-      style="margin: 0rem 0.45rem .2rem"
-      >新增</mu-button
-    >
+    <mu-row style="margin: 0rem 0.45rem .2rem">
+      <mu-col span="12" lg="4" sm="6">
+        <mu-button @click="openFullscreen = true" color="primary"
+          >新增</mu-button
+        >
+      </mu-col>
+      <mu-col span="12" lg="4" sm="6">
+        <mu-date-input
+          v-model="date"
+          label="选择日期"
+          format="YYYY 年 MM 月 DD 日"
+          value-format="YYYY-MM-DD"
+          label-float
+          full-width
+          @change="onDateChange"
+        ></mu-date-input>
+      </mu-col>
+    </mu-row>
     <div
       style="margin: 0rem 0.4rem 0; border: 1px solid rgba(204, 204, 204, 0.52);"
     >
@@ -72,7 +88,7 @@
 
           <mu-form-item label="高职级总人数" prop="vocational">
             <mu-text-field
-             type="number"
+              type="number"
               v-model="validateForm.vocational"
               prop="vocational"
             ></mu-text-field>
@@ -80,7 +96,7 @@
 
           <mu-form-item label="品质宣讲人数" prop="preach">
             <mu-text-field
-             type="number"
+              type="number"
               v-model="validateForm.preach"
               prop="preach"
             ></mu-text-field>
@@ -93,7 +109,7 @@
           </mu-form-item>
           <mu-form-item label="品质宣传人数" prop="propaganda">
             <mu-text-field
-             type="number"
+              type="number"
               v-model="validateForm.propaganda"
               prop="propaganda"
             ></mu-text-field>
@@ -111,10 +127,14 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
+
 export default {
   name: 'table-o',
   data() {
+    const date = dayjs().format('YYYY-MM-DD')
     return {
+      date,
       columns: [
         { title: '分公司', width: 90, name: 'branch' },
         {
@@ -253,7 +273,10 @@ export default {
   methods: {
     // 获取数据
     getData() {
-
+      const params = {
+        date: this.date
+      }
+      console.log({ params })
     },
     onDelete() {
       this.$confirm('确定要删除？', '提示', {
@@ -290,6 +313,9 @@ export default {
         propaganda: '', // 品质宣传人数
         propAmr: '' // 品质宣传达成率
       }
+    },
+    onDateChange(val) {
+      console.log(val)
     }
   }
 }
