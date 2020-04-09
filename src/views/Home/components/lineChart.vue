@@ -131,6 +131,11 @@ export default {
       this.getData()
     },
     getData() {
+      // 加载
+      myChart.showLoading({
+        text: '加载中',
+        color: 'rgb(255, 210, 0)'
+      })
       xAxis.data = dataJson.xAxis
       series.forEach(v => {
         const item = dataJson.data.find(a => a.name === v.name)
@@ -140,6 +145,7 @@ export default {
         xAxis,
         series
       })
+      myChart.hideLoading()
     }
   }
 }

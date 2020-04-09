@@ -10,49 +10,58 @@ let myChart = null
 const tooltip = {
   triggerOn: 'click',
   formatter: function(e, t, n) {
-    return `${e.name}<ul>
-      <li> 宣讲人数：${e.value || 0} </li>
-      <li> 达成率：${e.value || 0} </li>
-      <li> 宣传人数：${e.value || 0} </li>
-      <li> 达成率：${e.value || 0} </li></ul>`
+    console.log(e)
+    if (e.data) {
+      return `${e.name}<ul>
+        <li> 宣讲人数：${e.data.preach || 0}</li>
+        <li> 达成率：${Math.round((e.data.preachAmr || 0) * 100)}%</li>
+        <li> 宣传人数：${e.data.propaganda || 0}</li>
+        <li> 达成率：${Math.round((e.data.propAmr || 0) * 100)}%</li></ul>`
+    }
   }
 }
 const visualMap = {
   min: 0,
-  max: 1000000,
+  max: 1,
   left: 2,
   bottom: 10,
   showLabel: !0,
   show: false,
   pieces: [
     {
-      gt: 1000,
-      label: '> 1000 人',
-      color: '#b3261f'
+      gte: 1,
+      label: '100%',
+      color: 'rgb(255, 210, 0)'
     },
     {
-      gte: 500,
-      lte: 999,
-      label: '500 - 999 人',
-      color: '#d65328'
+      gte: 0.7,
+      lte: 0.99,
+      label: '70%-99%',
+      color: 'rgb(215, 33, 57)'
     },
     {
-      gte: 100,
-      lt: 499,
-      label: '100 - 499 人',
-      color: '#eb9637'
+      gte: 0.5,
+      lt: 0.69,
+      label: '50%-69%',
+      color: 'rgb(255, 24, 68)'
     },
     {
-      gt: 10,
-      lt: 99,
-      label: '确诊10-99人',
-      color: '#f0c644'
+      gt: 0.3,
+      lt: 0.49,
+      label: '30%-49%',
+      color: 'rgb(254, 81, 119)'
+    },
+    {
+      gt: 0.1,
+      lt: 0.29,
+      label: '10%-29%',
+      color: 'rgb(255, 121, 150)'
     },
     {
       gt: 0,
-      lt: 9,
-      label: '确诊1-9人',
-      color: '#f8e850'
+      lt: 0.09,
+      label: '1%-9%',
+      color: 'rgb(255, 205, 210)'
     }
   ]
 }
@@ -84,13 +93,48 @@ export default {
       explanation: false,
       chartIndex: 0,
       openScroll: false,
-      tipShow: false
+      tipShow: false,
+      dataJson,
+      dynamic: {
+        // 全国动态
+        preachSum: 15285, // 本周品质宣讲
+        LastWeekpreach: -36, // 上周品质宣讲
+        propagandaSum: 2281, // 本周品质宣传
+        LastWeekPropaganda: -36, // 上周品质宣传
+        preachAmrSum: 2281, // 本周品质宣讲达成率
+        LastWeekpreachAmr: 0.26, // 上周品质宣讲达成率
+        propAmrSum: 2281, // 本周品质宣传达成率
+        LastWeekpropAmr: 0.26, // 上周品质宣传达成率
+        preachT3: '北京、上海、乌鲁木齐', // 品质宣讲人数TOP3
+        propagandaT3: '北京、上海、宁波', // 品质宣传人数TOP3
+        preachAmrT3: '北京、上海、宁波', // 品质宣讲达成率TOP3
+        propAmrT3: '北京、上海、宁波' // 品质宣传达成率TOP3
+      },
+      tipData: {
+        name: '',
+        value: 0,
+        preach: 0, // 品质宣讲人数
+        preachAmr: 0, // 品质宣讲达成率
+        propaganda: 0, // 品质宣传人数
+        propAmr: 0 // 品质宣传达成率
+      }
     }
   },
   watch: {
     // 切换地图数据
     chartIndex(val, old) {
-      console.log(val, old)
+      this.dataJson.forEach(ele => {
+        if (val === 0) {
+          ele.value = ele.preachAmr
+        } else {
+          ele.value = ele.propAmr
+        }
+      })
+      // 重新渲染数据
+      series[0].data = this.dataJson
+      myChart.setOption({
+        series
+      })
     }
   },
   created() {
@@ -126,14 +170,14 @@ export default {
           itemStyle: {
             normal: {
               areaColor: '#ffffff',
-              shadowBlur: 5,
-              shadowColor: 'rgba(0, 0, 0, 0.2)',
+              shadowBlur: 0,
+              // shadowColor: 'rgba(0, 0, 0, 0.2)',
               borderColor: '#e1c2c1'
             },
             emphasis: {
-              areaColor: 'gold',
-              shadowOffsetX: 2,
-              shadowOffsetY: 2,
+              // areaColor: 'rgb(255, 172, 0)',
+              shadowOffsetX: 0,
+              shadowOffsetY: 0,
               borderWidth: 0
             }
           }
@@ -146,10 +190,18 @@ export default {
       this.getData()
     },
     getData() {
-      series[0].data = dataJson
-      myChart.setOption({
-        series
+      // 显示加载
+      myChart.showLoading({
+        text: '加载中',
+        color: 'rgb(255, 210, 0)'
       })
+      setTimeout(() => {
+        series[0].data = this.dataJson
+        myChart.setOption({
+          series
+        })
+        myChart.hideLoading()
+      }, 500)
       // setTimeout(() => {
       //   myChart.dispatchAction({
       //     type: 'showTip',
@@ -160,13 +212,14 @@ export default {
       // }, 200)
     },
     listenInit() {
-      document.addEventListener('click', (e) => {
-        if (!([].includes.call(e.target.classList, 'mu-ripple-wrapper'))) {
+      document.addEventListener('click', e => {
+        if (![].includes.call(e.target.classList, 'mu-ripple-wrapper')) {
           this.tipShow = false
         }
       })
     },
     showTip(name) {
+      // 隐藏地图显示
       myChart.dispatchAction({
         type: 'hidTip',
         // 可选，系列 index，可以是一个数组指定多个系列
@@ -178,7 +231,13 @@ export default {
         seriesIndex: 0,
         name: '北京'
       })
-      this.tipShow = true
+      const tipData = this.dataJson.find(v => v.name === name)
+      if (tipData) {
+        this.tipData = tipData
+        this.tipShow = true
+      } else {
+        this.tipShow = false
+      }
     }
   }
 }

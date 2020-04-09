@@ -3,7 +3,7 @@
     <mu-button @click="$router.push({path: '/'})" color="green" style="margin: .2rem 0.4rem 0">
       <mu-icon value="arrow_back" left></mu-icon>
     </mu-button>
-    <h3>公司活动达成率</h3>
+    <h3>分公司活动积分情况</h3>
     <mu-button
       @click="openFullscreen = true"
       color="primary"
@@ -21,11 +21,12 @@
       >
         <template slot-scope="scope">
           <td>{{ scope.row.branch }}</td>
-          <td class="is-right">{{ scope.row.vocational }}</td>
           <td class="is-right">{{ scope.row.preach }}</td>
-          <td class="is-right">{{ scope.row.preachAmr }}</td>
           <td class="is-right">{{ scope.row.propaganda }}</td>
-          <td class="is-center">{{ scope.row.propAmr }}%</td>
+          <td class="is-right">{{ scope.row.style }}</td>
+          <td class="is-right">{{ scope.row.media }}</td>
+          <td class="is-right">{{ scope.row.baise }}%</td>
+          <td class="is-right">{{ scope.row.sum }}%</td>
           <td class="is-center">
             <mu-container class="button-wrapper">
               <mu-button small flat color="primary">编辑</mu-button>
@@ -37,7 +38,6 @@
         </template>
       </mu-data-table>
     </div>
-
     <mu-dialog
       width="360"
       transition="slide-bottom"
@@ -70,38 +70,50 @@
             ></mu-text-field>
           </mu-form-item>
 
-          <mu-form-item label="高职级总人数" prop="vocational">
+          <mu-form-item label="品质宣讲得分(48)" prop="preach">
             <mu-text-field
-             type="number"
-              v-model="validateForm.vocational"
-              prop="vocational"
-            ></mu-text-field>
-          </mu-form-item>
-
-          <mu-form-item label="品质宣讲人数" prop="preach">
-            <mu-text-field
-             type="number"
+              type="number"
+              :min="0"
+              :max="48"
               v-model="validateForm.preach"
               prop="preach"
             ></mu-text-field>
           </mu-form-item>
-          <mu-form-item label="品质宣讲达成率" prop="preachAmr">
+
+          <mu-form-item label="品质宣传得分(22)" prop="propaganda">
             <mu-text-field
-              v-model="validateForm.preachAmr"
-              prop="preachAmr"
-            ></mu-text-field>
-          </mu-form-item>
-          <mu-form-item label="品质宣传人数" prop="propaganda">
-            <mu-text-field
-             type="number"
+              type="number"
+              :min="0"
+              :max="22"
               v-model="validateForm.propaganda"
               prop="propaganda"
             ></mu-text-field>
           </mu-form-item>
-          <mu-form-item label="品质宣传达成率" prop="propAmr">
+          <mu-form-item label="风采展示得分(15)" prop="style">
             <mu-text-field
-              v-model="validateForm.propAmr"
-              prop="propAmr"
+              type="number"
+              :min="0"
+              :max="15"
+              v-model="validateForm.style"
+              prop="style"
+            ></mu-text-field>
+          </mu-form-item>
+          <mu-form-item label="媒体宣传得分(10)" prop="media">
+            <mu-text-field
+              type="number"
+              :min="0"
+              :max="10"
+              v-model="validateForm.media"
+              prop="media"
+            ></mu-text-field>
+          </mu-form-item>
+          <mu-form-item label="基础工作得分(5)" prop="baise">
+            <mu-text-field
+              type="number"
+              :min="0"
+              :max="5"
+              v-model="validateForm.baise"
+              prop="baise"
             ></mu-text-field>
           </mu-form-item>
         </mu-form>
@@ -118,31 +130,33 @@ export default {
       columns: [
         { title: '分公司', width: 90, name: 'branch' },
         {
-          title: '高职级总人数',
-          width: 115,
-          name: 'vocational'
+          title: '品质宣讲得分(48)',
+          name: 'preach'
         },
         {
-          title: '品质宣讲人数',
-          name: 'preach',
-          width: 115,
-          align: 'center'
-        },
-        {
-          title: '品质宣讲达成率',
-          name: 'preachAmr',
-          width: 130,
-          align: 'center'
-        },
-        {
-          title: '品质宣传人数',
+          title: '品质宣传得分(22)',
           name: 'propaganda',
-          width: 120,
           align: 'center'
         },
         {
-          title: '品质宣传达成率',
-          name: 'propAmr',
+          title: '风采展示得分(15)',
+          name: 'style',
+          align: 'center'
+        },
+        {
+          title: '媒体宣传得分(10)',
+          name: 'media',
+          align: 'center'
+        },
+        {
+          title: '基础工作得分(5)',
+          name: 'baise',
+          align: 'center'
+        },
+        {
+          title: '总得分',
+          width: 86,
+          name: 'sum',
           align: 'center'
         },
         {
@@ -155,104 +169,42 @@ export default {
       list: [
         {
           branch: '北京',
-          vocational: 159,
-          preach: 6.0,
-          preachAmr: 24,
-          propaganda: 4.0,
-          propAmr: 1
-        },
-        {
-          branch: '北京',
-          vocational: 237,
-          preach: 9.0,
-          preachAmr: 37,
-          propaganda: 4.3,
-          propAmr: 1
-        },
-        {
-          branch: '北京',
-          vocational: 262,
-          preach: 16.0,
-          preachAmr: 23,
+          preach: 159,
           propaganda: 6.0,
-          propAmr: 7
+          style: 24,
+          media: 4.0,
+          baise: 1,
+          sum: 1
         },
         {
           branch: '北京',
-          vocational: 305,
-          preach: 3.7,
-          preachAmr: 67,
-          propaganda: 4.3,
-          propAmr: 8
-        },
-        {
-          branch: '北京',
-          vocational: 356,
-          preach: 16.0,
-          preachAmr: 49,
-          propaganda: 3.9,
-          propAmr: 16
-        },
-        {
-          branch: '北京',
-          vocational: 375,
-          preach: 0.0,
-          preachAmr: 94,
-          propaganda: 0.0,
-          propAmr: 0
-        },
-        {
-          branch: '北京',
-          vocational: 392,
-          preach: 0.2,
-          preachAmr: 98,
-          propaganda: 0,
-          propAmr: 2
-        },
-        {
-          branch: '北京',
-          vocational: 408,
-          preach: 3.2,
-          preachAmr: 87,
-          propaganda: 6.5,
-          propAmr: 45
-        },
-        {
-          branch: '北京',
-          vocational: 452,
-          preach: 25.0,
-          preachAmr: 51,
-          propaganda: 4.9,
-          propAmr: 22
-        },
-        {
-          branch: '北京',
-          vocational: 518,
-          preach: 26.0,
-          preachAmr: 65,
-          propaganda: 7,
-          propAmr: 6
+          preach: 237,
+          propaganda: 9.0,
+          style: 37,
+          media: 4.3,
+          sum: 1
         }
       ],
       openFullscreen: false,
       rules: [{ validate: val => !!val, message: '必须填写' }],
       validateForm: {
         branch: '', // 分公司
-        vocational: '', // 高职级总人数
-        preach: '', // 品质宣讲人数
-        preachAmr: '', // 品质宣讲达成率
-        propaganda: '', // 品质宣传人数
-        propAmr: '' // 品质宣传达成率
+        preach: '', // 品质宣讲得分(48)
+        propaganda: '', // 品质宣传得分(22)
+        style: '', // 风采展示得分(15)
+        media: '', // 媒体宣传得分(10)
+        baise: '' // 基础工作得分(5)
       },
       loading: false
     }
   },
   created() {
-    this.getData()
+    // 获取数据
+    this.getDate()
   },
   methods: {
     // 获取数据
-    getData() {
+    getDate() {
 
     },
     onDelete() {
@@ -284,11 +236,11 @@ export default {
       this.$refs.form.clear()
       this.validateForm = {
         branch: '', // 分公司
-        vocational: '', // 高职级总人数
-        preach: '', // 品质宣讲人数
-        preachAmr: '', // 品质宣讲达成率
-        propaganda: '', // 品质宣传人数
-        propAmr: '' // 品质宣传达成率
+        preach: '', // 品质宣讲得分(48)
+        propaganda: '', // 品质宣传得分(22)
+        style: '', // 风采展示得分(15)
+        media: '', // 媒体宣传得分(10)
+        baise: '' // 基础工作得分(5)
       }
     }
   }

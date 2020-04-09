@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>分公司活动积分情况</h3>
+    <h3>分公司活动积分<span @click="$router.push({path: '/table-t'})">情况</span></h3>
     <div style="margin: 0rem 0.4rem 0; border: 1px solid rgba(204, 204, 204, 0.52);">
         <mu-data-table
           no-data-text="暂无数据"
