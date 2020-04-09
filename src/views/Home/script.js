@@ -158,8 +158,8 @@ export default {
             min: 1,
             max: 2
           },
-          zoom: 1.22,
-          top: '60px',
+          zoom: 1.2,
+          top: '10%',
           label: {
             normal: {
               show: !0,
