@@ -1,4 +1,5 @@
-import 'echarts/map/js/china'
+import echarts from '@/utils/echarts'
+
 // import * as api from '../../api/index'
 import dataJson from './mapdata'
 import TableO from './components/table-o'
@@ -10,7 +11,6 @@ let myChart = null
 const tooltip = {
   triggerOn: 'click',
   formatter: function(e, t, n) {
-    console.log(e)
     if (e.data) {
       return `${e.name}<ul>
         <li> 宣讲人数：${e.data.preach || 0}</li>
@@ -146,7 +146,7 @@ export default {
   methods: {
     mapInit() {
       // 初始化echarts实例
-      myChart = this.$echarts.init(document.getElementById('myEcharts'))
+      myChart = echarts.init(document.getElementById('myEcharts'))
       // 指定图表的配置项和数据
       const option = {
         tooltip,

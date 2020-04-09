@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import echarts from '@/utils/echarts'
+
 let myChart = null
 
 const dataJson = {
@@ -106,7 +108,7 @@ export default {
   methods: {
     init() {
       // 初始化echarts实例
-      myChart = this.$echarts.init(document.getElementById('lineCharts'))
+      myChart = echarts.init(document.getElementById('lineCharts'))
       // 指定图表的配置项和数据
       const option = {
         grid,
