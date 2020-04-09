@@ -6,19 +6,20 @@
 
 <script>
 import echarts from '@/utils/echarts'
-
+import dayjs from 'dayjs'
+import * as api from '@/api/index'
 let myChart = null
 
-const dataJson = {
-  xAxis: ['4.3', '4.10', '4.17', '4.24', '5.1', '5.8', '5.15', '5.22', '5.29'],
-  data: [
-    {
-      name: '品质宣讲',
-      data: [820, 932, 901, 934, 1290, 1330, 1320, 231, 434]
-    },
-    { name: '品质宣传', data: [1820, 1932, 1901, 1934, 11290, 11330, 11320, 321, 123] }
-  ]
-}
+// const dataJson = {
+//   xAxis: ['4.3', '4.10', '4.17', '4.24', '5.1', '5.8', '5.15', '5.22', '5.29'],
+//   data: [
+//     {
+//       name: '品质宣讲',
+//       data: [820, 932, 901, 934, 1290, 1330, 1320, 231, 434]
+//     },
+//     { name: '品质宣传', data: [1820, 1932, 1901, 1934, 11290, 11330, 11320, 321, 123] }
+//   ]
+// }
 
 const legend = {
   icon: 'roundRect',
@@ -79,7 +80,7 @@ const series = [
     type: 'line',
     lineStyle: {
       normal: {
-        color: 'red'
+        color: '#ed414b'
       }
     },
     smooth: true
@@ -90,7 +91,7 @@ const series = [
     type: 'line',
     lineStyle: {
       normal: {
-        color: 'gold'
+        color: '#fad247'
       }
     },
     smooth: true
@@ -111,6 +112,7 @@ export default {
       myChart = echarts.init(document.getElementById('lineCharts'))
       // 指定图表的配置项和数据
       const option = {
+        color: ['#ed414b', '#fad247'],
         grid,
         title: {
           text: '全系统活动开展趋势图',
@@ -132,15 +134,18 @@ export default {
       myChart.setOption(option)
       this.getData()
     },
-    getData() {
+    async getData() {
       // 加载
       myChart.showLoading({
         text: '加载中',
         color: 'rgb(255, 210, 0)'
       })
-      xAxis.data = dataJson.xAxis
+      const res = await api.getLineData()
+      // console.log(res)
+
+      xAxis.data = res.data.xAxis.map(v => dayjs(v).format('M.D'))
       series.forEach(v => {
-        const item = dataJson.data.find(a => a.name === v.name)
+        const item = res.data.data.find(a => a.name === v.name)
         v.data = item.data
       })
       myChart.setOption({
@@ -159,7 +164,7 @@ export default {
   border: 0.5px solid #e7e9eb;
   box-sizing: border-box;
   border-radius: 0.16rem;
-  margin-bottom: .6rem;
+  margin-bottom: 0.6rem;
 }
 #lineCharts {
   user-select: none;

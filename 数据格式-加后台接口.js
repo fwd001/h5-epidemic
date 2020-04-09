@@ -133,7 +133,7 @@ const lineData = {
  * 表1 表单数据字段相同，部分字段是计算获得
  * 时间纬度 周5
  * 数据表单提交 后端获取提交时间 以每周5为分割 记录为同一数据范围
-*/
+ */
 const table1 = [
   {
     id: 0,
@@ -192,7 +192,7 @@ const table1 = [
  * 表2 表单数据字段相同，部分字段是计算获得
  * 数据表单提交 后端获取提交时间
  * 此表不确定有没有时间纬度
-*/
+ */
 const table2 = [
   {
     id: 1,
@@ -247,4 +247,95 @@ const table2 = [
 // 		"createdTime": "2020-04-09 14:47:12",
 // 		"lastUpdatedTime": "2020-04-09 14:48:16"
 // 	}]
+// }
+
+// 新增接口
+// 1.全国总数据录入：
+// http://47.101.174.148/statis/total/saveorupdate
+// method:post
+// Content type:application/json;charset=UTF-8
+// 入参：
+// {
+// 	"LastWeekpreach": 100,  // 上周宣讲增加数量
+// 	"preachSum": 50111, // 本周宣讲数量
+// 	"LastWeekpreachAmr": "10%",	   // 宣讲达成率
+// 	"preachAmrSum": 600000,	   // 累计宣讲数量
+// 	"preachT3": "宁波,sh,bj",  // 宣讲人数top3
+// 	"preachAmrT3": "北京,宁波,上海", // 宣讲达成率top3
+// 	"LastWeekPropaganda": 20,  // 上周宣传增加数量
+// 	"propagandaSum": 10001, // 本周宣传数量
+// 	"LastWeekpropAmr": "16%",  // 宣传达成率
+// 	"propAmrSum": 600000,	   // 累计宣传数量
+// 	"propagandaT3": "天津,北京,上海", // 宣传人数top3
+// 	"propAmrT3": "天津,北京,上海" // 宣传达成率top3
+// }
+// 出参：
+// 成功：
+// {
+// 	"ret":0,
+// 	"msg":"success",
+// 	"data":{}
+// }
+// 失败：
+// {
+// 	"ret":-1,
+// 	"msg":"错误提示",
+// 	"data":{}
+// }
+
+// 2.各省份宣讲，宣传数据录入（新增，修改同一个接口，新增时不传id）
+// http://47.101.174.148/statis/metadata/saveorupdate
+// method:post
+// Content type:application/json;charset=UTF-8
+// 入参：
+// {
+// 	"id":1,
+// 	"branch": "上海",
+// 	"vocational": 1001,
+// 	"preach": 501,
+// 	"preachAmr": 25,
+// 	"propaganda": 50,
+// 	"propAmr": 10
+// }
+// 出参：
+// 成功：
+// {
+// 	"ret":0,
+// 	"msg":"success",
+// 	"data":{}
+// }
+// 失败：
+// {
+// 	"ret":-1,
+// 	"msg":"错误提示",
+// 	"data":{}
+// }
+
+// 3.各省份积分录入（新增，修改同一个接口，新增时不传id）：
+// http://47.101.174.148/statis/score/saveorupdate
+// method:post
+// Content type:application/json;charset=UTF-8
+// 入参：
+// {
+// 	"id":1,
+// 	"branch": "天津",
+// 	"preach": 101,
+// 	"propaganda": 301,
+// 	"style": 210,
+// 	"media": 15,
+// 	"baise": 20,
+// 	"sum": 95
+// }
+// 出参：
+// 成功：
+// {
+// 	"ret":0,
+// 	"msg":"success",
+// 	"data":{}
+// }
+// 失败：
+// {
+// 	"ret":-1,
+// 	"msg":"错误提示",
+// 	"data":{}
 // }

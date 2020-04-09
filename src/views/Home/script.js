@@ -1,7 +1,7 @@
 import echarts from '@/utils/echarts'
 
-// import * as api from '../../api/index'
-import dataJson from './mapdata'
+import * as api from '../../api/index'
+// import dataJson from './mapdata'
 import TableO from './components/table-o'
 import TableT from './components/table-t'
 import lineChart from './components/lineChart'
@@ -14,9 +14,9 @@ const tooltip = {
     if (e.data) {
       return `${e.name}<ul>
         <li> 宣讲人数：${e.data.preach || 0}</li>
-        <li> 达成率：${Math.round((e.data.preachAmr || 0) * 100)}%</li>
+        <li> 达成率：${e.data.preachAmr || 0}%</li>
         <li> 宣传人数：${e.data.propaganda || 0}</li>
-        <li> 达成率：${Math.round((e.data.propAmr || 0) * 100)}%</li></ul>`
+        <li> 达成率：${e.data.propAmr || 0}%</li></ul>`
     }
   }
 }
@@ -29,39 +29,39 @@ const visualMap = {
   show: false,
   pieces: [
     {
-      gte: 1,
+      gte: 100,
       label: '100%',
       color: 'rgb(255, 210, 0)'
     },
     {
-      gte: 0.7,
-      lte: 0.99,
+      gte: 70,
+      lte: 99,
       label: '70%-99%',
       color: 'rgb(215, 33, 57)'
     },
     {
-      gte: 0.5,
-      lt: 0.69,
+      gte: 50,
+      lte: 69,
       label: '50%-69%',
       color: 'rgb(255, 24, 68)'
     },
     {
-      gt: 0.3,
-      lt: 0.49,
+      gte: 30,
+      lte: 49,
       label: '30%-49%',
       color: 'rgb(254, 81, 119)'
     },
     {
-      gt: 0.1,
-      lt: 0.29,
+      gte: 10,
+      lte: 29,
       label: '10%-29%',
-      color: 'rgb(255, 121, 150)'
+      color: '#ef8094'
     },
     {
-      gt: 0,
-      lt: 0.09,
+      gte: 0,
+      lte: 9,
       label: '1%-9%',
-      color: 'rgb(255, 205, 210)'
+      color: '#f7cdd0'
     }
   ]
 }
@@ -94,29 +94,29 @@ export default {
       chartIndex: 0,
       openScroll: false,
       tipShow: false,
-      dataJson,
+      dataJson: [],
+      // 全国动态
       dynamic: {
-        // 全国动态
-        preachSum: 15285, // 本周品质宣讲
-        LastWeekpreach: -36, // 上周品质宣讲
-        propagandaSum: 2281, // 本周品质宣传
-        LastWeekPropaganda: -36, // 上周品质宣传
-        preachAmrSum: 2281, // 本周品质宣讲达成率
-        LastWeekpreachAmr: 0.26, // 上周品质宣讲达成率
-        propAmrSum: 2281, // 本周品质宣传达成率
-        LastWeekpropAmr: 0.26, // 上周品质宣传达成率
-        preachT3: '北京、上海、乌鲁木齐', // 品质宣讲人数TOP3
-        propagandaT3: '北京、上海、宁波', // 品质宣传人数TOP3
-        preachAmrT3: '北京、上海、宁波', // 品质宣讲达成率TOP3
-        propAmrT3: '北京、上海、宁波' // 品质宣传达成率TOP3
+        preachSum: '-', // 本周品质宣讲
+        lastWeekpreach: '-', // 上周品质宣讲
+        propagandaSum: '-', // 本周品质宣传
+        lastWeekPropaganda: '-', // 上周品质宣传
+        preachAmrSum: '-', // 本周品质宣讲达成率
+        lastWeekpreachAmr: '-', // 上周品质宣讲达成率
+        propAmrSum: '-', // 本周品质宣传达成率
+        lastWeekpropAmr: '-', // 上周品质宣传达成率
+        preachT3: '-', // 品质宣讲人数TOP3
+        propagandaT3: '-', // 品质宣传人数TOP3
+        preachAmrT3: '-', // 品质宣讲达成率TOP3
+        propAmrT3: '-' // 品质宣传达成率TOP3
       },
       tipData: {
-        name: '',
-        value: 0,
-        preach: 0, // 品质宣讲人数
-        preachAmr: 0, // 品质宣讲达成率
-        propaganda: 0, // 品质宣传人数
-        propAmr: 0 // 品质宣传达成率
+        name: '-',
+        value: '-',
+        preach: '-', // 品质宣讲人数
+        preachAmr: '-', // 品质宣讲达成率
+        propaganda: '-', // 品质宣传人数
+        propAmr: '-' // 品质宣传达成率
       }
     }
   },
@@ -139,6 +139,7 @@ export default {
   },
   created() {
     this.listenInit()
+    this.getDynamic()
   },
   mounted() {
     this.mapInit()
@@ -175,7 +176,7 @@ export default {
               borderColor: '#e1c2c1'
             },
             emphasis: {
-              // areaColor: 'rgb(255, 172, 0)',
+              areaColor: 'rgb(255, 172, 0)',
               shadowOffsetX: 0,
               shadowOffsetY: 0,
               borderWidth: 0
@@ -189,27 +190,32 @@ export default {
       myChart.setOption(option)
       this.getData()
     },
-    getData() {
+    async getDynamic() {
+      const res = await api.getDynamic()
+      this.dynamic = res.data
+      // console.log(res)
+    },
+    async getData() {
       // 显示加载
       myChart.showLoading({
         text: '加载中',
         color: 'rgb(255, 210, 0)'
       })
-      setTimeout(() => {
-        series[0].data = this.dataJson
-        myChart.setOption({
-          series
+      const res = await api.getMapData()
+      // console.log(res)
+      this.dataJson = res.data.map(
+        v => ({
+          ...v,
+          name: v.branch,
+          value: v.preachAmr
         })
-        myChart.hideLoading()
-      }, 500)
-      // setTimeout(() => {
-      //   myChart.dispatchAction({
-      //     type: 'showTip',
-      //     // 可选，系列 index，可以是一个数组指定多个系列
-      //     seriesIndex: 0,
-      //     name: '北京'
-      //   })
-      // }, 200)
+      )
+      series[0].data = this.dataJson
+      myChart.setOption({
+        series
+      })
+      myChart.hideLoading()
+      setTimeout(() => {}, 500)
     },
     listenInit() {
       document.addEventListener('click', e => {

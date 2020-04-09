@@ -11,6 +11,12 @@ const routes = [
     component: Home
   },
   {
+    path: '/dynamic-add',
+    name: 'dynamic-add',
+    component: () =>
+      import(/* webpackChunkName: "dynamic-add" */ '../views/dynamic-add.vue')
+  },
+  {
     path: '/table-o',
     name: 'table-o',
     component: () =>

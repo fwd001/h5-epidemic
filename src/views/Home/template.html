@@ -1,6 +1,10 @@
 <div class="home">
   <header>
-    <img style='height: 100%;' src="../../assets/images/top.jpeg" alt="toppng">
+    <img
+      style="height: 100%;"
+      src="../../assets/images/top.jpeg"
+      alt="toppng"
+    />
   </header>
   <section>
     <div class="global-data">
@@ -10,24 +14,30 @@
         </div>
         <div class="section">
           <div class="item">
-            <span class="diff-val">上周<i class=""> {{dynamic.LastWeekpreach}}</i></span>
+            <span class="diff-val">上周<i> {{dynamic.lastWeekpreach}}</i></span>
             <span class="sum">{{dynamic.preachSum}}</span>
             <span class="title">本周品质宣讲</span>
           </div>
           <span class="line"></span>
           <div class="item">
-            <span class="diff-val">上周<i class="">  {{dynamic.LastWeekPropaganda}}</i></span>
+            <span class="diff-val"
+              >上周<i> {{dynamic.lastWeekPropaganda}}</i></span
+            >
             <span class="sum"> {{dynamic.propagandaSum}}</span>
             <span class="title">本周品质宣传</span>
           </div>
           <span class="line"></span>
           <div class="item">
-            <span class="diff-val">达成率<i class="">  {{Math.round(dynamic.LastWeekpreachAmr * 100)}}%</i></span>
+            <span class="diff-val"
+              >达成率<i> {{dynamic.lastWeekpreachAmr}}</i></span
+            >
             <span class="sum"> {{dynamic.preachAmrSum}}</span>
             <span class="title">累计品质宣讲</span>
           </div>
           <div class="item">
-            <span class="diff-val">达成率<i class="">   {{Math.round(dynamic.LastWeekpropAmr * 100)}}%</i></span>
+            <span class="diff-val"
+              >达成率<i> {{dynamic.lastWeekpropAmr}}</i></span
+            >
             <span class="sum"> {{dynamic.propAmrSum}}</span>
             <span class="title">累计品质宣传</span>
           </div>
@@ -71,7 +81,28 @@
               >数据说明</a
             ></span
           >
-          <div v-show="explanation">暂无。</div>
+          <!-- <div v-show="explanation">暂无。</div> -->
+          <mu-dialog
+            title="全国动态数据说明"
+            width="360"
+            scrollable
+            :open.sync="explanation"
+          >
+            <p>1.数据来源</p>
+            <p>全部数据来自每周五各分公司反馈的活动周汇报统计表。</p>
+            <p>2.更新时间</p>
+            <p>
+              每周一汇总各分公司反馈的数据后，由编辑手动更新。周一9:00之后反馈的数据将不记录在本周动态。如有任何疑问，请联系总公司品质管理室李智老师。
+            </p>
+            <p></p>
+            <mu-button
+              slot="actions"
+              flat
+              color="primary"
+              @click="explanation = false"
+              >好的</mu-button
+            >
+          </mu-dialog>
         </div>
       </div>
     </div>
@@ -85,13 +116,13 @@
         <mu-button small @click="showTip('佛山')">佛山</mu-button>
         <mu-button small @click="showTip('苏州')">苏州</mu-button>
       </mu-container>
-      <div class="showTip" v-show='tipShow'>
+      <div class="showTip" v-show="tipShow">
         <ul>
           <li>{{tipData.name}}</li>
           <li>宣讲人数：{{tipData.preach}}</li>
-          <li>达成率：{{Math.round(tipData.preachAmr * 100)}}%</li>
+          <li>达成率：{{tipData.preachAmr}}%</li>
           <li>宣传人数：{{tipData.propaganda}}</li>
-          <li>达成率：{{Math.round(tipData.propAmr * 100)}}%</li>
+          <li>达成率：{{tipData.propAmr}}%</li>
         </ul>
       </div>
       <div class="btn-box">
@@ -118,7 +149,9 @@
     <div class="table-t" style="margin-bottom: .5rem">
       <table-t></table-t>
       <div style="text-align: center; padding: 5px;">
-        <mu-button flat color="primary" @click="openScroll = !openScroll">积分规则说明</mu-button>
+        <mu-button flat color="primary" @click="openScroll = !openScroll"
+          >积分规则说明</mu-button
+        >
         <mu-dialog
           title="2020年品质文化宣传季活动积分规则"
           width="360"
@@ -126,25 +159,44 @@
           :open.sync="openScroll"
         >
           <p><strong>一、品质宣讲（48分）</strong></p>
-          <p><strong>推动各分公司70%个险、银保、服务拓展高职级业务人员进行品质宣讲，录制5分钟品质宣讲视频。</strong></p>
-          <p>规则：达成70%要求积30分，达成50%但低于70%积20分，50%以下不得分；达成70%以上每提高5个百分点增加积分3分。</p>
+          <p>
+            <strong
+              >推动各分公司70%个险、银保、服务拓展高职级业务人员进行品质宣讲，录制5分钟品质宣讲视频。</strong
+            >
+          </p>
+          <p>
+            规则：达成70%要求积30分，达成50%但低于70%积20分，50%以下不得分；达成70%以上每提高5个百分点增加积分3分。
+          </p>
           <p><strong>二、品质宣传（22分）</strong></p>
-          <p><strong>推动各分公司70%个险、银保、服务拓展高职级业务人员进行品质宣传，录制10秒宣传口号视频。</strong></p>
-          <p>规则：达成70%要求积10分，达成50%但低于70%积5分，50%以下不得分；每提高5个百分点增加积分2分。</p>
+          <p>
+            <strong
+              >推动各分公司70%个险、银保、服务拓展高职级业务人员进行品质宣传，录制10秒宣传口号视频。</strong
+            >
+          </p>
+          <p>
+            规则：达成70%要求积10分，达成50%但低于70%积5分，50%以下不得分；每提高5个百分点增加积分2分。
+          </p>
           <p><strong>三、风采展示（15分）</strong></p>
-          <p><strong>充分展示各分公司品质文化宣传季开展情况及活动特色。</strong></p>
-          <p>规则：各分公司报送风采展示视频，总公司组建评审团对视频进行评分，积分区间0-15分。 </p>
+          <p>
+            <strong>充分展示各分公司品质文化宣传季开展情况及活动特色。</strong>
+          </p>
+          <p>
+            规则：各分公司报送风采展示视频，总公司组建评审团对视频进行评分，积分区间0-15分。
+          </p>
           <p><strong>四、媒体宣传（10分）</strong></p>
-          <p><strong>推动各分公司整合办公室媒体资源，在有影响力的传统媒体、网络媒体和户外广告上对品质代言人进行宣传。</strong></p>
-          <p>规则：各种类型媒体每宣传一次积5分，上限10分；宣传次数统计以在机构品管群内通讯稿展示为准。</p>
+          <p>
+            <strong
+              >推动各分公司整合办公室媒体资源，在有影响力的传统媒体、网络媒体和户外广告上对品质代言人进行宣传。</strong
+            >
+          </p>
+          <p>
+            规则：各种类型媒体每宣传一次积5分，上限10分；宣传次数统计以在机构品管群内通讯稿展示为准。
+          </p>
           <p><strong>五、基础工作(5分)</strong></p>
           <p><strong>按总公司要求完成各项工作。</strong></p>
-          <p>规则：按要求完成各项工作积5分；未按照要求完成，每次扣2分，扣完即止。</p>
-          <p style="text-align: center;"><strong>全国动态数据说明</strong></p>
-          <p>1.数据来源</p>
-          <p>全部数据来自每周五各分公司反馈的活动周汇报统计表。</p>
-          <p>2.更新时间</p>
-          <p>每周一汇总各分公司反馈的数据后，由编辑手动更新。周一9:00之后反馈的数据将不记录在本周动态。如有任何疑问，请联系总公司品质管理室李智老师。</p>
+          <p>
+            规则：按要求完成各项工作积5分；未按照要求完成，每次扣2分，扣完即止。
+          </p>
           <p></p>
           <mu-button
             slot="actions"
@@ -157,7 +209,6 @@
       </div>
     </div>
     <div></div>
-    <footer>
-    </footer>
+    <footer></footer>
   </section>
 </div>

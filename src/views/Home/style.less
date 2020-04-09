@@ -4,7 +4,11 @@
     color: #2196f3;
   }
   header {
-    height: 2.9rem;;
+    img {
+      display: block;
+      width: 100%;
+    }
+    height: 2.9rem;
     background-color: #f6f6f6;
   }
   footer {
@@ -93,21 +97,24 @@
   .map-charts {
     position: relative;
     #myEcharts {
-      height: 7.2rem;
+      height: 6.2rem;
     }
     .btn-box {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      padding: 0 0.4rem;
+      padding: 0.15rem 0.4rem 0;
       width: 100%;
       box-sizing: border-box;
       .btn,
       .btn-active {
         width: 3.2rem;
-        height: 0.9rem;
-        line-height: 0.9rem;
+        height: 0.8rem;
+        line-height: 0.8rem;
         span {
+          border: 1px solid #e9eaeb;
+          // background-color: #f8f8f8;
+          border-radius: 0.1rem;
           display: block;
           width: 100%;
           font-size: 0.2rem;
@@ -117,13 +124,16 @@
         }
       }
       .btn {
-        background: url(../../assets/images/btn-normal.png) no-repeat;
-        background-size: contain;
-        background-position-y: 0.09rem;
+        span {
+          border-color: #e9eaeb;
+          background-color: #f8f8f8;
+        }
       }
       .btn-active {
-        background: url(../../assets/images/btn-active.png) no-repeat;
-        background-size: contain;
+        span {
+          border-color: #e1b0af;
+          background-color: #fbf3f2;
+        }
       }
     }
     .showTip {

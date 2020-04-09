@@ -35,6 +35,17 @@
         :columns="columns"
         :data="list"
       >
+        <template slot="header">
+          <tr>
+            <th class="is-center">分公司</th>
+            <th class="is-center">品质宣讲<br />得分(48)</th>
+            <th class="is-center">品质宣讲<br />得分(22)</th>
+            <th class="is-center">风采展示<br />得分(15)</th>
+            <th class="is-center">媒体宣传<br />得分(10)</th>
+            <th class="is-center">基础工作<br />得分(5)</th>
+            <th class="is-center">总得分</th>
+          </tr>
+        </template>
         <template slot-scope="scope">
           <td>{{ scope.row.branch }}</td>
           <td class="is-right">{{ scope.row.preach }}</td>
@@ -45,7 +56,13 @@
           <td class="is-right">{{ scope.row.sum }}%</td>
           <td class="is-center">
             <mu-container class="button-wrapper">
-              <mu-button small flat color="primary" @click="onEdit(scope.row.id)">编辑</mu-button>
+              <mu-button
+                small
+                flat
+                color="primary"
+                @click="onEdit(scope.row.id)"
+                >编辑</mu-button
+              >
               <mu-button small flat color="secondary" @click="onDelete"
                 >删除</mu-button
               >
@@ -55,91 +72,99 @@
       </mu-data-table>
     </div>
     <mu-dialog
-      width="360"
-      transition="slide-bottom"
-      fullscreen
+      title="新增数据"
+      width="600"
+      max-width="80%"
+      scrollable
       data-mu-loading-overlay-color="rgba(0, 0, 0, .7)"
       v-loading="loading"
+      :esc-press-close="false"
+      :overlay-close="false"
       :open.sync="openFullscreen"
     >
-      <mu-appbar color="primary" title="新增数据">
-        <mu-button
-          slot="left"
-          icon
-          @click="
-            clear()
-            openFullscreen = false
-          "
-        >
-          <mu-icon value="close"></mu-icon>
-        </mu-button>
-        <mu-button slot="right" flat @click="submit">
-          保存
-        </mu-button>
-      </mu-appbar>
-      <div style="padding: 24px;">
-        <mu-form ref="form" :model="validateForm" class="mu-demo-form">
-          <mu-form-item label="分公司" prop="branch">
-            <mu-text-field
-              v-model="validateForm.branch"
-              prop="branch"
-            ></mu-text-field>
-          </mu-form-item>
+      <mu-form ref="form" :model="validateForm" class="mu-demo-form">
+        <mu-form-item label="分公司" prop="branch">
+          <mu-text-field
+            v-model="validateForm.branch"
+            prop="branch"
+          ></mu-text-field>
+        </mu-form-item>
 
-          <mu-form-item label="品质宣讲得分(48)" prop="preach">
-            <mu-text-field
-              type="number"
-              :min="0"
-              :max="48"
-              v-model="validateForm.preach"
-              prop="preach"
-            ></mu-text-field>
-          </mu-form-item>
+        <mu-form-item label="品质宣讲得分(48)" prop="preach">
+          <mu-text-field
+            type="number"
+            :min="0"
+            :max="48"
+            v-model="validateForm.preach"
+            prop="preach"
+          ></mu-text-field>
+        </mu-form-item>
 
-          <mu-form-item label="品质宣传得分(22)" prop="propaganda">
-            <mu-text-field
-              type="number"
-              :min="0"
-              :max="22"
-              v-model="validateForm.propaganda"
-              prop="propaganda"
-            ></mu-text-field>
-          </mu-form-item>
-          <mu-form-item label="风采展示得分(15)" prop="style">
-            <mu-text-field
-              type="number"
-              :min="0"
-              :max="15"
-              v-model="validateForm.style"
-              prop="style"
-            ></mu-text-field>
-          </mu-form-item>
-          <mu-form-item label="媒体宣传得分(10)" prop="media">
-            <mu-text-field
-              type="number"
-              :min="0"
-              :max="10"
-              v-model="validateForm.media"
-              prop="media"
-            ></mu-text-field>
-          </mu-form-item>
-          <mu-form-item label="基础工作得分(5)" prop="baise">
-            <mu-text-field
-              type="number"
-              :min="0"
-              :max="5"
-              v-model="validateForm.baise"
-              prop="baise"
-            ></mu-text-field>
-          </mu-form-item>
-        </mu-form>
-      </div>
+        <mu-form-item label="品质宣传得分(22)" prop="propaganda">
+          <mu-text-field
+            type="number"
+            :min="0"
+            :max="22"
+            v-model="validateForm.propaganda"
+            prop="propaganda"
+          ></mu-text-field>
+        </mu-form-item>
+        <mu-form-item label="风采展示得分(15)" prop="style">
+          <mu-text-field
+            type="number"
+            :min="0"
+            :max="15"
+            v-model="validateForm.style"
+            prop="style"
+          ></mu-text-field>
+        </mu-form-item>
+        <mu-form-item label="媒体宣传得分(10)" prop="media">
+          <mu-text-field
+            type="number"
+            :min="0"
+            :max="10"
+            v-model="validateForm.media"
+            prop="media"
+          ></mu-text-field>
+        </mu-form-item>
+        <mu-form-item label="基础工作得分(5)" prop="baise">
+          <mu-text-field
+            type="number"
+            :min="0"
+            :max="5"
+            v-model="validateForm.baise"
+            prop="baise"
+          ></mu-text-field>
+        </mu-form-item>
+         <mu-form-item label="总得分" prop="sum">
+          <mu-text-field
+            type="number"
+            :min="0"
+            v-model="validateForm.sum"
+            prop="sum"
+          ></mu-text-field>
+        </mu-form-item>
+      </mu-form>
+      <mu-button
+        slot="actions"
+        flat
+        color="primary"
+        @click="
+          clear()
+          openFullscreen = false
+        "
+        >关闭</mu-button
+      >
+      <mu-button slot="actions" flat color="primary" @click="submit"
+        >保存</mu-button
+      >
     </mu-dialog>
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs'
+import * as api from '@/api/index'
 
 export default {
   name: 'table-o',
@@ -148,64 +173,54 @@ export default {
     return {
       date,
       columns: [
-        { title: '分公司', width: 90, name: 'branch' },
+        { title: '分公司', width: 50, name: 'branch' },
         {
           title: '品质宣讲得分(48)',
+          width: 55,
           name: 'preach'
         },
         {
           title: '品质宣传得分(22)',
+          width: 55,
           name: 'propaganda',
           align: 'center'
         },
         {
           title: '风采展示得分(15)',
+          width: 55,
           name: 'style',
           align: 'center'
         },
         {
           title: '媒体宣传得分(10)',
+          width: 55,
           name: 'media',
           align: 'center'
         },
         {
           title: '基础工作得分(5)',
+          width: 55,
           name: 'baise',
           align: 'center'
         },
         {
           title: '总得分',
-          width: 86,
+          width: 50,
           name: 'sum',
-          align: 'center'
-        },
-        {
-          title: '操作',
-          name: 'option',
-          width: 280,
           align: 'center'
         }
       ],
       list: [
-        {
-          id: 1,
-          branch: '北京',
-          preach: 159,
-          propaganda: 6.0,
-          style: 24,
-          media: 4.0,
-          baise: 1,
-          sum: 1
-        },
-        {
-          id: 2,
-          branch: '北京',
-          preach: 237,
-          propaganda: 9.0,
-          style: 37,
-          media: 4.3,
-          sum: 1
-        }
+        // {
+        //   id: 1,
+        //   branch: '北京',
+        //   preach: 159,
+        //   propaganda: 6.0,
+        //   style: 24,
+        //   media: 4.0,
+        //   baise: 1,
+        //   sum: 1
+        // }
       ],
       openFullscreen: false,
       rules: [{ validate: val => !!val, message: '必须填写' }],
@@ -215,7 +230,8 @@ export default {
         propaganda: '', // 品质宣传得分(22)
         style: '', // 风采展示得分(15)
         media: '', // 媒体宣传得分(10)
-        baise: '' // 基础工作得分(5)
+        baise: '', // 基础工作得分(5)
+        sum: ''
       },
       loading: false
     }
@@ -247,16 +263,15 @@ export default {
       })
     },
     submit() {
-      this.$refs.form.validate().then(result => {
+      this.$refs.form.validate().then(async result => {
         if (result) {
           this.loading = true
           console.log('form: ', this.validateForm)
-          setTimeout(() => {
-            this.clear()
-            this.loading = false
-
-            this.openFullscreen = false
-          }, 500)
+          const res = await api.addTableDataT(this.validateForm)
+          console.log(res)
+          this.clear()
+          this.loading = false
+          this.openFullscreen = false
         }
       })
     },
@@ -268,7 +283,8 @@ export default {
         propaganda: '', // 品质宣传得分(22)
         style: '', // 风采展示得分(15)
         media: '', // 媒体宣传得分(10)
-        baise: '' // 基础工作得分(5)
+        baise: '', // 基础工作得分(5)
+        sum: ''
       }
     },
     onDateChange(val) {

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Vue from 'vue'
+// import Vue from 'vue'
 import { serverUrl } from '../config'
 
 // 服务端地址
@@ -8,7 +8,8 @@ const service = axios.create({
   withCredentials: true, // 跨域时是否带上cookie
   timeout: 20000, // 请求超时时间配置(ms)
   headers: {
-    'Content-Type': 'application/json;charset=UTF-8' // json数据格式传输
+    'Content-Type': 'application/json;charset=UTF-8', // json数据格式传输
+    abc: 'cba'
   }
 })
 
@@ -30,9 +31,7 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     // 服务端响应成功时，搞些事情
-    if (res.code !== '000000') {
-      const msg = res.msg || '系统错误'
-      Vue.prototype.$message.error(msg)
+    if (res.ret !== 0) {
       throw res
     } else {
       return res
