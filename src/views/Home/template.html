@@ -5,6 +5,7 @@
       src="../../assets/images/top.jpeg"
       alt="toppng"
     />
+    <div class='secret' @click="$router.push({path: '/dynamic-add'})"></div>
   </header>
   <section>
     <div class="global-data">
@@ -76,7 +77,7 @@
         </div>
         <div class="footer">
           <span
-            >截止2020.4.01 |
+            >截止{{date}} |
             <a href="javascript:;" @click="explanation = !explanation"
               >数据说明</a
             ></span

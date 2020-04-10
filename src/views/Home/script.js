@@ -5,6 +5,7 @@ import * as api from '../../api/index'
 import TableO from './components/table-o'
 import TableT from './components/table-t'
 import lineChart from './components/lineChart'
+import dayjs from 'dayjs'
 
 let myChart = null
 
@@ -89,6 +90,7 @@ export default {
     'line-chart': lineChart
   },
   data() {
+    const date = dayjs().format('YYYY-MM-DD')
     return {
       explanation: false,
       chartIndex: 0,
@@ -117,7 +119,8 @@ export default {
         preachAmr: '-', // 品质宣讲达成率
         propaganda: '-', // 品质宣传人数
         propAmr: '-' // 品质宣传达成率
-      }
+      },
+      date
     }
   },
   watch: {
@@ -203,13 +206,11 @@ export default {
       })
       const res = await api.getMapData()
       // console.log(res)
-      this.dataJson = res.data.map(
-        v => ({
-          ...v,
-          name: v.branch,
-          value: v.preachAmr
-        })
-      )
+      this.dataJson = res.data.map(v => ({
+        ...v,
+        name: v.branch,
+        value: v.preachAmr
+      }))
       series[0].data = this.dataJson
       myChart.setOption({
         series
