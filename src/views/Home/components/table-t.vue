@@ -16,13 +16,13 @@
       >
         <template slot="header">
           <tr>
-            <th class="is-center">分公司</th>
-            <th class="is-center">品质宣讲<br />得分(48)</th>
-            <th class="is-center">品质宣讲<br />得分(22)</th>
-            <th class="is-center">风采展示<br />得分(15)</th>
-            <th class="is-center">媒体宣传<br />得分(10)</th>
-            <th class="is-center">基础工作<br />得分(5)</th>
-            <th class="is-center">总得分</th>
+            <th class="is-center" style="white-space: normal;">分公司</th>
+            <th class="is-center" style="white-space: normal;">品质宣讲得分<br />(48)</th>
+            <th class="is-center" style="white-space: normal;">品质宣讲得分<br />(22)</th>
+            <th class="is-center" style="white-space: normal;">风采展示得分<br />(15)</th>
+            <th class="is-center" style="white-space: normal;">媒体宣传得分<br />(10)</th>
+            <th class="is-center" style="white-space: normal;">基础工作得分<br />(5)</th>
+            <th class="is-center" style="white-space: normal;">总得分</th>
           </tr>
         </template>
         <template slot-scope="scope">
@@ -45,44 +45,36 @@ import * as api from '@/api/index'
 export default {
   name: 'table-o',
   data() {
-    let beCounted = 2
-    const width = window.screen.width
-    if (width <= 414) {
-      beCounted = 1
-    } else if (width > 414 && width <= 768) {
-      beCounted = 2
-    } else if (width > 768) {
-      beCounted = 3
-    }
+    const beCounted = window.screen.width / 375
     return {
       columns: [
-        { title: '分公司', width: 50 * beCounted, name: 'branch' },
+        { title: '分公司', width: 44 * beCounted, name: 'branch' },
         {
           title: '品质宣讲得分(48)',
-          width: 55 * beCounted,
+          width: 50 * beCounted,
           name: 'preach'
         },
         {
           title: '品质宣传得分(22)',
-          width: 55 * beCounted,
+          width: 50 * beCounted,
           name: 'propaganda',
           align: 'center'
         },
         {
           title: '风采展示得分(15)',
-          width: 55 * beCounted,
+          width: 48 * beCounted,
           name: 'style',
           align: 'center'
         },
         {
           title: '媒体宣传得分(10)',
-          width: 55 * beCounted,
+          width: 46 * beCounted,
           name: 'media',
           align: 'center'
         },
         {
           title: '基础工作得分(5)',
-          width: 55 * beCounted,
+          width: 46 * beCounted,
           name: 'baise',
           align: 'center'
         },

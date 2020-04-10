@@ -14,12 +14,12 @@
       >
         <template slot="header">
           <tr>
-            <th class="is-center">分公司</th>
-            <th class="is-center">品质宣<br />讲人数</th>
-            <th class="is-center">品质宣<br />讲人数</th>
-            <th class="is-center">品质宣讲<br />达成率</th>
-            <th class="is-center">品质宣<br />传人数</th>
-            <th class="is-center">品质宣传<br />达成率</th>
+            <th class="is-center" style="white-space: normal;">分公司</th>
+            <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
+            <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
+            <th class="is-center" style="white-space: normal;">品质宣讲达成率</th>
+            <th class="is-center" style="white-space: normal;">品质宣传人数</th>
+            <th class="is-center" style="white-space: normal;">品质宣传达成率</th>
           </tr>
         </template>
         <template slot-scope="scope">
@@ -41,18 +41,10 @@ import * as api from '@/api/index'
 export default {
   name: 'table-o',
   data() {
-    let beCounted = 2
-    const width = window.screen.width
-    if (width <= 414) {
-      beCounted = 1
-    } else if (width > 414 && width <= 768) {
-      beCounted = 2
-    } else if (width > 768) {
-      beCounted = 3
-    }
+    const beCounted = window.screen.width / 375
     return {
       columns: [
-        { title: '分公司', width: 65 * beCounted, name: 'branch' },
+        { title: '分公司', width: 50 * beCounted, name: 'branch' },
         {
           title: '高职级总人数',
           width: 65 * beCounted,
@@ -61,13 +53,13 @@ export default {
         {
           title: '品质宣讲人数',
           name: 'preach',
-          width: 65 * beCounted,
+          width: 55 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣讲达成率',
           name: 'preachAmr',
-          width: 65 * beCounted,
+          width: 55 * beCounted,
           align: 'center'
         },
         {
@@ -79,7 +71,7 @@ export default {
         {
           title: '品质宣传达成率',
           name: 'propAmr',
-          width: 60 * beCounted,
+          width: 55 * beCounted,
           align: 'center'
         }
       ],

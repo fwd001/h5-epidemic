@@ -1,12 +1,11 @@
 <template>
   <div>
-    <mu-button
-      @click="$router.push({ path: '/' })"
-      color="green"
-      style="margin: .2rem 0.4rem 0"
-    >
-      <mu-icon value="arrow_back" left></mu-icon>
-    </mu-button>
+    <mu-container style="padding-top: 20px" class="button-wrapper">
+      <mu-button @click="$router.push({ path: '/' })" flat>首页</mu-button>
+      <mu-button @click="$router.push({ path: '/table-o' })" flat>达成率</mu-button>
+      <mu-button @click="$router.push({ path: '/table-t' })" flat>积分</mu-button>
+    </mu-container>
+
     <h3>全国动态</h3>
     <mu-row style="margin: 0rem 0.45rem .2rem">
       <mu-col span="12" lg="4" sm="6">

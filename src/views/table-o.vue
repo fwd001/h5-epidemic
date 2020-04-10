@@ -1,12 +1,15 @@
 <template>
   <div>
-    <mu-button
-      @click="$router.push({ path: '/' })"
-      color="green"
-      style="margin: .2rem 0.4rem 0"
-    >
-      <mu-icon value="arrow_back" left></mu-icon>
-    </mu-button>
+    <mu-container class="button-wrapper" style="padding-top: 20px">
+      <mu-button @click="$router.push({ path: '/' })" flat>首页</mu-button>
+      <mu-button @click="$router.push({ path: '/dynamic-add' })" flat
+        >全国动态</mu-button
+      >
+      <mu-button @click="$router.push({ path: '/table-t' })" flat
+        >积分</mu-button
+      >
+    </mu-container>
+
     <h3>公司活动达成率</h3>
     <mu-row style="margin: 0rem 0.45rem .2rem">
       <mu-col span="12" lg="4" sm="6">
@@ -38,11 +41,11 @@
         <template slot="header">
           <tr>
             <th class="is-center">分公司</th>
-            <th class="is-center">品质宣<br />讲人数</th>
-            <th class="is-center">品质宣<br />讲人数</th>
-            <th class="is-center">品质宣讲<br />达成率</th>
-            <th class="is-center">品质宣<br />传人数</th>
-            <th class="is-center">品质宣传<br />达成率</th>
+            <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
+            <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
+            <th class="is-center" style="white-space: normal;">品质宣讲达成率</th>
+            <th class="is-center" style="white-space: normal;">品质宣传人数</th>
+            <th class="is-center" style="white-space: normal;">品质宣传达成率</th>
           </tr>
         </template>
         <template slot-scope="scope">
@@ -76,7 +79,7 @@
       :open.sync="openFullscreen"
     >
       <mu-form ref="form" :model="validateForm" class="mu-demo-form">
-        <mu-form-item label="分公司" prop="branch">
+        <mu-form-item label="分公司" prop="branch" :rules="rules">
           <mu-text-field
             v-model="validateForm.branch"
             prop="branch"
@@ -143,22 +146,14 @@ export default {
   name: 'table-o',
   data() {
     const date = dayjs().format('YYYY-MM-DD')
-    let beCounted = 2
-    const width = window.screen.width
-    if (width <= 414) {
-      beCounted = 1
-    } else if (width > 414 && width <= 768) {
-      beCounted = 2
-    } else if (width > 768) {
-      beCounted = 3
-    }
+    const beCounted = window.screen.width / 375
     return {
       date,
       columns: [
-        { title: '分公司', width: 55 * beCounted, name: 'branch' },
+        { title: '分公司', width: 50 * beCounted, name: 'branch' },
         {
           title: '高职级总人数',
-          width: 55 * beCounted,
+          width: 65 * beCounted,
           name: 'vocational'
         },
         {
@@ -170,7 +165,7 @@ export default {
         {
           title: '品质宣讲达成率',
           name: 'preachAmr',
-          width: 60 * beCounted,
+          width: 55 * beCounted,
           align: 'center'
         },
         {
@@ -182,7 +177,7 @@ export default {
         {
           title: '品质宣传达成率',
           name: 'propAmr',
-          width: 60 * beCounted,
+          width: 55 * beCounted,
           align: 'center'
         }
       ],
