@@ -143,37 +143,46 @@ export default {
   name: 'table-o',
   data() {
     const date = dayjs().format('YYYY-MM-DD')
+    let beCounted = 2
+    const width = window.screen.width
+    if (width <= 414) {
+      beCounted = 1
+    } else if (width > 414 && width <= 768) {
+      beCounted = 2
+    } else if (width > 768) {
+      beCounted = 3
+    }
     return {
       date,
       columns: [
-        { title: '分公司', width: 55, name: 'branch' },
+        { title: '分公司', width: 55 * beCounted, name: 'branch' },
         {
           title: '高职级总人数',
-          width: 55,
+          width: 55 * beCounted,
           name: 'vocational'
         },
         {
           title: '品质宣讲人数',
           name: 'preach',
-          width: 55,
+          width: 55 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣讲达成率',
           name: 'preachAmr',
-          width: 60,
+          width: 60 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣传人数',
           name: 'propaganda',
-          width: 55,
+          width: 55 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣传达成率',
           name: 'propAmr',
-          width: 60,
+          width: 60 * beCounted,
           align: 'center'
         }
       ],
@@ -227,8 +236,8 @@ export default {
         if (result) {
           this.loading = true
           console.log('form: ', this.validateForm)
-          const res = await api.addTableDataO(this.validateForm)
-          console.log(res)
+          await api.addTableDataO(this.validateForm)
+          // console.log(res)
           this.clear()
           this.loading = false
           this.openFullscreen = false

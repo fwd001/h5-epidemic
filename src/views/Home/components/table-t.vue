@@ -45,41 +45,50 @@ import * as api from '@/api/index'
 export default {
   name: 'table-o',
   data() {
+    let beCounted = 2
+    const width = window.screen.width
+    if (width <= 414) {
+      beCounted = 1
+    } else if (width > 414 && width <= 768) {
+      beCounted = 2
+    } else if (width > 768) {
+      beCounted = 3
+    }
     return {
       columns: [
-        { title: '分公司', width: 50, name: 'branch' },
+        { title: '分公司', width: 50 * beCounted, name: 'branch' },
         {
           title: '品质宣讲得分(48)',
-          width: 55,
+          width: 55 * beCounted,
           name: 'preach'
         },
         {
           title: '品质宣传得分(22)',
-          width: 55,
+          width: 55 * beCounted,
           name: 'propaganda',
           align: 'center'
         },
         {
           title: '风采展示得分(15)',
-          width: 55,
+          width: 55 * beCounted,
           name: 'style',
           align: 'center'
         },
         {
           title: '媒体宣传得分(10)',
-          width: 55,
+          width: 55 * beCounted,
           name: 'media',
           align: 'center'
         },
         {
           title: '基础工作得分(5)',
-          width: 55,
+          width: 55 * beCounted,
           name: 'baise',
           align: 'center'
         },
         {
           title: '总得分',
-          width: 50,
+          width: 50 * beCounted,
           name: 'sum',
           align: 'center'
         }

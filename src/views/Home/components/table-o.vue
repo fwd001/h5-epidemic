@@ -41,36 +41,45 @@ import * as api from '@/api/index'
 export default {
   name: 'table-o',
   data() {
+    let beCounted = 2
+    const width = window.screen.width
+    if (width <= 414) {
+      beCounted = 1
+    } else if (width > 414 && width <= 768) {
+      beCounted = 2
+    } else if (width > 768) {
+      beCounted = 3
+    }
     return {
       columns: [
-        { title: '分公司', width: 55, name: 'branch' },
+        { title: '分公司', width: 65 * beCounted, name: 'branch' },
         {
           title: '高职级总人数',
-          width: 55,
+          width: 65 * beCounted,
           name: 'vocational'
         },
         {
           title: '品质宣讲人数',
           name: 'preach',
-          width: 55,
+          width: 65 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣讲达成率',
           name: 'preachAmr',
-          width: 60,
+          width: 65 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣传人数',
           name: 'propaganda',
-          width: 55,
+          width: 55 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣传达成率',
           name: 'propAmr',
-          width: 60,
+          width: 60 * beCounted,
           align: 'center'
         }
       ],
@@ -89,6 +98,7 @@ export default {
   created() {
     this.getData()
   },
+  computed: {},
   methods: {
     async getData() {
       const res = await api.getTableDataO()

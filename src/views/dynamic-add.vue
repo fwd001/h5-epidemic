@@ -186,8 +186,8 @@ export default {
         if (result) {
           this.loading = true
           console.log('form: ', this.validateForm)
-          const res = await api.addDynamic(this.validateForm)
-          console.log('res', res)
+          await api.addDynamic(this.validateForm)
+          // console.log('res', res)
           this.clear()
           this.loading = false
           this.openFullscreen = false

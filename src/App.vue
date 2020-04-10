@@ -4,6 +4,18 @@
   </div>
 </template>
 
+<script>
+import { mapMutations } from 'vuex'
+export default {
+  created() {
+    this.getBeCounted()
+  },
+  methods: {
+    ...mapMutations(['getBeCounted'])
+  }
+}
+</script>
+
 <style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
