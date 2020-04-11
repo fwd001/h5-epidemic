@@ -23,7 +23,8 @@ module.exports = {
       )
     }
     config.externals = {
-      echarts: 'echarts' // 默认是配置引用的库（这里是echarts）暴露出的全局变量
+      echarts: 'echarts', // 默认是配置引用的库（这里是echarts）暴露出的全局变量
+      wx: 'wx'
     }
   }
 }

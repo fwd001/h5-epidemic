@@ -60,3 +60,11 @@ export function addTableDataT(data) {
     data
   })
 }
+
+export function getWxTickt() {
+  const url = encodeURIComponent(location.href.split('#')[0])
+  return request({
+    url: 'ticket?url=' + url,
+    method: 'GET'
+  })
+}

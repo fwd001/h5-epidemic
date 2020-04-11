@@ -1,9 +1,21 @@
 <template>
   <div>
     <mu-container style="padding-top: 20px" class="button-wrapper">
-      <mu-button color="primary" @click="$router.push({ path: '/' })" flat>首页</mu-button>
-      <mu-button color="primary" @click="$router.push({ path: '/table-o' })" flat>达成率</mu-button>
-      <mu-button color="primary" @click="$router.push({ path: '/table-t' })" flat>积分</mu-button>
+      <mu-button color="primary" @click="$router.push({ path: '/' })" flat
+        >首页</mu-button
+      >
+      <mu-button
+        color="primary"
+        @click="$router.push({ path: '/table-o' })"
+        flat
+        >达成率</mu-button
+      >
+      <mu-button
+        color="primary"
+        @click="$router.push({ path: '/table-t' })"
+        flat
+        >积分</mu-button
+      >
     </mu-container>
 
     <h3>全国动态</h3>
@@ -13,7 +25,7 @@
           >新增</mu-button
         >
       </mu-col>
-      <mu-col span="12" lg="4" sm="6">
+      <!-- <mu-col span="12" lg="4" sm="6">
         <mu-date-input
           v-model="date"
           label="选择日期"
@@ -23,6 +35,54 @@
           full-width
           @change="onDateChange"
         ></mu-date-input>
+      </mu-col> -->
+    </mu-row>
+
+    <mu-row style="margin: 0rem 0.45rem .2rem">
+      <mu-col span="12" lg="4" sm="6">
+        <div>
+          本周品质宣讲: <span>{{ dynamic.preachSum }}</span>
+        </div>
+
+        <div>
+          上周品质宣讲: <span>{{ dynamic.lastWeekpreach }}</span>
+        </div>
+
+        <div>
+          本周品质宣传: <span>{{ dynamic.propagandaSum }}</span>
+        </div>
+
+        <div>上周品质宣传: <span>{{ dynamic.lastWeekPropaganda }}</span></div>
+
+        <div>
+          累计品质宣讲: <span>{{ dynamic.preachAmrSum }}</span>
+        </div>
+
+        <div>
+          达成率: <span>{{ dynamic.lastWeekpreachAmr }}</span>
+        </div>
+
+        <div>
+          累计品质宣传: <span>{{ dynamic.propAmrSum }}</span>
+        </div>
+
+        <div>
+          达成率: <span>{{ dynamic.lastWeekpropAmr }}</span>
+        </div>
+
+        <div>
+          品质宣讲人数TOP3: <span>{{ dynamic.preachT3 }}</span>
+        </div>
+
+        <div>
+          品质宣传人数TOP3: <span>{{ dynamic.propagandaT3 }}</span>
+        </div>
+
+        <div>
+          品质宣讲达成率TOP3: <span>{{ dynamic.preachAmrT3 }}</span>
+        </div>
+
+        <div>品质宣传达成率TOP3: <span>{{ dynamic.propAmrT3 }}</span></div>
       </mu-col>
     </mu-row>
 
@@ -66,47 +126,63 @@
             prop="lastWeekPropaganda"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="本周品质宣讲达成率" prop="preachAmrSum">
+        <mu-form-item label="累计品质宣讲" prop="preachAmrSum">
           <mu-text-field
             v-model="validateForm.preachAmrSum"
             prop="preachAmrSum"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="上周品质宣讲达成率" prop="lastWeekpreachAmr">
+        <mu-form-item label="累计品质宣讲达成率" prop="lastWeekpreachAmr">
           <mu-text-field
             v-model="validateForm.lastWeekpreachAmr"
             prop="lastWeekpreachAmr"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="本周品质宣传达成率" prop="propAmrSum">
+        <mu-form-item label="累计品质宣传" prop="propAmrSum">
           <mu-text-field
             v-model="validateForm.propAmrSum"
             prop="propAmrSum"
           ></mu-text-field>
         </mu-form-item>
 
-        <mu-form-item label="上周品质宣传达成率" prop="lastWeekpropAmr">
+        <mu-form-item label="累计品质宣传达成率" prop="lastWeekpropAmr">
           <mu-text-field
             v-model="validateForm.lastWeekpropAmr"
             prop="lastWeekpropAmr"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item  help-text="请以中文逗号分割，示例‘北京，上海，新疆’" label="品质宣讲人数TOP3" prop="preachT3">
+        <mu-form-item
+          help-text="请以中文逗号分割，示例‘北京，上海，新疆’"
+          label="品质宣讲人数TOP3"
+          prop="preachT3"
+        >
           <mu-text-field v-model="validateForm.preachT3"></mu-text-field>
         </mu-form-item>
-        <mu-form-item help-text="请以中文逗号分割，示例‘北京，上海，新疆’" label="品质宣传人数TOP3" prop="propagandaT3">
+        <mu-form-item
+          help-text="请以中文逗号分割，示例‘北京，上海，新疆’"
+          label="品质宣传人数TOP3"
+          prop="propagandaT3"
+        >
           <mu-text-field
             v-model="validateForm.propagandaT3"
             prop="propagandaT3"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item help-text="请以中文逗号分割，示例‘北京，上海，新疆’" label="品质宣讲达成率TOP3" prop="preachAmrT3">
+        <mu-form-item
+          help-text="请以中文逗号分割，示例‘北京，上海，新疆’"
+          label="品质宣讲达成率TOP3"
+          prop="preachAmrT3"
+        >
           <mu-text-field
             v-model="validateForm.preachAmrT3"
             prop="preachAmrT3"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item help-text="请以中文逗号分割，示例‘北京，上海，新疆’" label="品质宣传达成率TOP3" prop="propAmrT3">
+        <mu-form-item
+          help-text="请以中文逗号分割，示例‘北京，上海，新疆’"
+          label="品质宣传达成率TOP3"
+          prop="propAmrT3"
+        >
           <mu-text-field
             v-model="validateForm.propAmrT3"
             prop="propAmrT3"
@@ -147,15 +223,16 @@ export default {
         lastWeekpreach: '', // 上周品质宣讲
         propagandaSum: '', // 本周品质宣传
         lastWeekPropaganda: '', // 上周品质宣传
-        preachAmrSum: '', // 本周品质宣讲达成率
-        lastWeekpreachAmr: '', // 上周品质宣讲达成率
-        propAmrSum: '', // 本周品质宣传达成率
-        lastWeekpropAmr: '', // 上周品质宣传达成率
+        preachAmrSum: '', // 累计品质宣讲
+        lastWeekpreachAmr: '', // 达成率
+        propAmrSum: '', // 累计品质宣传
+        lastWeekpropAmr: '', // 达成率
         preachT3: '-，-，-', // 品质宣讲人数TOP3
         propagandaT3: '-，-，-', // 品质宣传人数TOP3
         preachAmrT3: '-，-，-', // 品质宣讲达成率TOP3
         propAmrT3: '-，-，-' // 品质宣传达成率TOP3
       },
+      dynamic: {},
       loading: false
     }
   },
@@ -165,11 +242,9 @@ export default {
   },
   methods: {
     // 获取数据
-    getData() {
-      const params = {
-        date: this.date
-      }
-      console.log({ params })
+    async getData() {
+      const res = await api.getDynamic()
+      this.dynamic = res.data
     },
     onEdit() {
       console.log('编辑')
@@ -193,6 +268,7 @@ export default {
           try {
             await api.addDynamic(this.validateForm)
             // console.log('res', res)
+            this.getData()
             this.clear()
             this.loading = false
             this.openFullscreen = false
@@ -210,14 +286,14 @@ export default {
         lastWeekpreach: '', // 上周品质宣讲
         propagandaSum: '', // 本周品质宣传
         lastWeekPropaganda: '', // 上周品质宣传
-        preachAmrSum: '', // 本周品质宣讲达成率
-        lastWeekpreachAmr: '', // 上周品质宣讲达成率
-        propAmrSum: '', // 本周品质宣传达成率
-        lastWeekpropAmr: '', // 上周品质宣传达成率
-        preachT3: '', // 品质宣讲人数TOP3
-        propagandaT3: '', // 品质宣传人数TOP3
-        preachAmrT3: '', // 品质宣讲达成率TOP3
-        propAmrT3: '' // 品质宣传达成率TOP3
+        preachAmrSum: '', // 累计品质宣讲
+        lastWeekpreachAmr: '', // 达成率
+        propAmrSum: '', // 累计品质宣传
+        lastWeekpropAmr: '', // 达成率
+        preachT3: '-，-，-', // 品质宣讲人数TOP3
+        propagandaT3: '-，-，-', // 品质宣传人数TOP3
+        preachAmrT3: '-，-，-', // 品质宣讲达成率TOP3
+        propAmrT3: '-，-，-' // 品质宣传达成率TOP3
       }
     },
     onDateChange(val) {

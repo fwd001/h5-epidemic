@@ -1,11 +1,19 @@
 <template>
   <div>
     <mu-container class="button-wrapper" style="padding-top: 20px">
-      <mu-button color="primary" @click="$router.push({ path: '/' })" flat>首页</mu-button>
-      <mu-button color="primary" @click="$router.push({ path: '/dynamic-add' })" flat
+      <mu-button color="primary" @click="$router.push({ path: '/' })" flat
+        >首页</mu-button
+      >
+      <mu-button
+        color="primary"
+        @click="$router.push({ path: '/dynamic-add' })"
+        flat
         >全国动态</mu-button
       >
-      <mu-button color="primary" @click="$router.push({ path: '/table-t' })" flat
+      <mu-button
+        color="primary"
+        @click="$router.push({ path: '/table-t' })"
+        flat
         >积分</mu-button
       >
     </mu-container>
@@ -17,7 +25,7 @@
           >新增</mu-button
         >
       </mu-col>
-      <mu-col span="12" lg="4" sm="6">
+      <!-- <mu-col span="12" lg="4" sm="6">
         <mu-date-input
           v-model="date"
           label="选择日期"
@@ -27,10 +35,10 @@
           full-width
           @change="onDateChange"
         ></mu-date-input>
-      </mu-col>
+      </mu-col> -->
     </mu-row>
     <div
-      style="margin: 0rem 0.4rem 0; border: 1px solid rgba(204, 204, 204, 0.52);"
+      style="margin: 0rem 0.4rem .4rem; border: 1px solid rgba(204, 204, 204, 0.52);"
     >
       <mu-data-table
         no-data-text="暂无数据"
@@ -43,18 +51,22 @@
             <th class="is-center">分公司</th>
             <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
             <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
-            <th class="is-center" style="white-space: normal;">品质宣讲达成率</th>
+            <th class="is-center" style="white-space: normal;">
+              品质宣讲达成率
+            </th>
             <th class="is-center" style="white-space: normal;">品质宣传人数</th>
-            <th class="is-center" style="white-space: normal;">品质宣传达成率</th>
+            <th class="is-center" style="white-space: normal;">
+              品质宣传达成率
+            </th>
           </tr>
         </template>
         <template slot-scope="scope">
-          <td>{{ scope.row.branch }}</td>
-          <td class="is-right">{{ scope.row.vocational }}</td>
-          <td class="is-right">{{ scope.row.preach }}</td>
-          <td class="is-right">{{ scope.row.preachAmr }}</td>
-          <td class="is-right">{{ scope.row.propaganda }}</td>
-          <td class="is-center">{{ scope.row.propAmr }}%</td>
+          <td class="is-center">{{ scope.row.branch }}</td>
+          <td class="is-center">{{ scope.row.vocational }}</td>
+          <td class="is-center">{{ scope.row.preach }}</td>
+          <td class="is-center">{{ (scope.row.preachAmr * 100).toFixed(2) }}%</td>
+          <td class="is-center">{{ scope.row.propaganda }}</td>
+          <td class="is-center">{{ (scope.row.propAmr*100).toFixed(2) }}%</td>
           <td class="is-center">
             <mu-container class="button-wrapper">
               <mu-button small flat color="primary">编辑</mu-button>
@@ -97,11 +109,12 @@
         <mu-form-item label="品质宣讲人数" prop="preach">
           <mu-text-field
             type="number"
+            @blur="onBlur('vocational', 'preach', 'preachAmr')"
             v-model="validateForm.preach"
             prop="preach"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="品质宣讲达成率" prop="preachAmr">
+        <mu-form-item help-text='' label="品质宣讲达成率（自动计算 {$0}%）" prop="preachAmr">
           <mu-text-field
             v-model="validateForm.preachAmr"
             prop="preachAmr"
@@ -110,11 +123,12 @@
         <mu-form-item label="品质宣传人数" prop="propaganda">
           <mu-text-field
             type="number"
+            @blur="onBlur('vocational', 'propaganda', 'propAmr')"
             v-model="validateForm.propaganda"
             prop="propaganda"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="品质宣传达成率" prop="propAmr">
+        <mu-form-item label="品质宣传达成率（自动计算 {$0}%）" prop="propAmr">
           <mu-text-field
             v-model="validateForm.propAmr"
             prop="propAmr"
@@ -181,16 +195,7 @@ export default {
           align: 'center'
         }
       ],
-      list: [
-        // {
-        //   branch: '北京',
-        //   vocational: 159,
-        //   preach: 6.0,
-        //   preachAmr: 24,
-        //   propaganda: 4.0,
-        //   propAmr: 1
-        // }
-      ],
+      list: [],
       openFullscreen: false,
       rules: [{ validate: val => !!val, message: '必须填写' }],
       validateForm: {
@@ -209,11 +214,9 @@ export default {
   },
   methods: {
     // 获取数据
-    getData() {
-      const params = {
-        date: this.date
-      }
-      console.log({ params })
+    async getData() {
+      const res = await api.getTableDataO()
+      this.list = res.data
     },
     onDelete() {
       this.$confirm('确定要删除？', '提示', {
@@ -233,6 +236,7 @@ export default {
           console.log('form: ', this.validateForm)
           await api.addTableDataO(this.validateForm)
           // console.log(res)
+          this.getData()
           this.clear()
           this.loading = false
           this.openFullscreen = false
@@ -248,6 +252,11 @@ export default {
         preachAmr: '', // 品质宣讲达成率
         propaganda: '', // 品质宣传人数
         propAmr: '' // 品质宣传达成率
+      }
+    },
+    onBlur(a, b, c) {
+      if (this.validateForm[a] && this.validateForm[b]) {
+        this.validateForm[c] = (this.validateForm[b] / this.validateForm[a]).toFixed(4)
       }
     },
     onDateChange(val) {

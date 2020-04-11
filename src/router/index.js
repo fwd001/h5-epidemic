@@ -12,6 +12,11 @@ const routes = [
       import(/* webpackChunkName: "dynamic-add" */ '../views/Home')
   },
   {
+    path: '/manage',
+    name: 'manage',
+    redirect: '/dynamic-add'
+  },
+  {
     path: '/dynamic-add',
     name: 'dynamic-add',
     component: () =>

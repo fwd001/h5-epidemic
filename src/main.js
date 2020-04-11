@@ -5,6 +5,7 @@ import store from './store'
 // import FastClick from 'fastclick'
 import '@/assets/css/index.less'
 import './utils/ui'
+import './utils/wx'
 
 if (process.env.NODE_ENV === 'development') {
   const VConsole = require('vconsole')

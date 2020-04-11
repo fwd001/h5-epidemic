@@ -7,6 +7,39 @@ import TableT from './components/table-t'
 import lineChart from './components/lineChart'
 import dayjs from 'dayjs'
 
+const COLOR = [
+  {
+    gte: 1,
+    color: 'rgb(255, 210, 0)'
+  },
+  {
+    gte: 0.7,
+    lte: 1,
+    color: 'rgb(215, 33, 57)'
+  },
+  {
+    gte: 0.5,
+    lte: 0.7,
+    color: 'rgb(255, 24, 68)'
+  },
+  {
+    gte: 0.3,
+    lte: 0.5,
+    color: 'rgb(254, 81, 119)'
+  },
+  {
+    gte: 0.1,
+    lte: 0.3,
+    color: '#ef8094'
+  },
+  {
+    gte: 0.0,
+    lte: 0.1,
+    color: '#f7cdd0'
+  }
+]
+console.log(COLOR)
+
 let myChart = null
 const beCounted = window.screen.width / 375
 const tooltip = {
@@ -15,9 +48,9 @@ const tooltip = {
     if (e.data) {
       return `${e.name}<ul>
         <li> 宣讲人数：${e.data.preach || 0}</li>
-        <li> 达成率：${e.data.preachAmr || 0}%</li>
+        <li> 达成率：${(e.data.preachAmr * 100).toFixed(2) || 0}%</li>
         <li> 宣传人数：${e.data.propaganda || 0}</li>
-        <li> 达成率：${e.data.propAmr || 0}%</li></ul>`
+        <li> 达成率：${(e.data.propAmr * 100).toFixed(2) || 0}%</li></ul>`
     }
   }
 }
@@ -30,37 +63,37 @@ const visualMap = {
   show: false,
   pieces: [
     {
-      gte: 100,
+      gte: 1,
       label: '100%',
       color: 'rgb(255, 210, 0)'
     },
     {
-      gte: 70,
-      lte: 99,
+      gte: 0.7,
+      lt: 1,
       label: '70%-99%',
       color: 'rgb(215, 33, 57)'
     },
     {
-      gte: 50,
-      lte: 69,
+      gte: 0.5,
+      lt: 0.7,
       label: '50%-69%',
       color: 'rgb(255, 24, 68)'
     },
     {
-      gte: 30,
-      lte: 49,
+      gte: 0.3,
+      lt: 0.5,
       label: '30%-49%',
       color: 'rgb(254, 81, 119)'
     },
     {
-      gte: 10,
-      lte: 29,
+      gte: 0.1,
+      lt: 0.3,
       label: '10%-29%',
       color: '#ef8094'
     },
     {
-      gte: 0,
-      lte: 9,
+      gt: 0.0,
+      lt: 0.1,
       label: '1%-9%',
       color: '#f7cdd0'
     }
@@ -97,16 +130,24 @@ export default {
       openScroll: false,
       tipShow: false,
       dataJson: [],
+      color: {
+        ningbo: '#fff',
+        shenzheng: '#fff',
+        qingdao: '#fff',
+        dalian: '#fff',
+        fuoshan: '#fff',
+        suzhou: '#fff'
+      },
       // 全国动态
       dynamic: {
         preachSum: '-', // 本周品质宣讲
         lastWeekpreach: '-', // 上周品质宣讲
         propagandaSum: '-', // 本周品质宣传
         lastWeekPropaganda: '-', // 上周品质宣传
-        preachAmrSum: '-', // 本周品质宣讲达成率
-        lastWeekpreachAmr: '-', // 上周品质宣讲达成率
-        propAmrSum: '-', // 本周品质宣传达成率
-        lastWeekpropAmr: '-', // 上周品质宣传达成率
+        preachAmrSum: '-', // 累计品质宣讲
+        lastWeekpreachAmr: '-', // 达成率
+        propAmrSum: '-', // 累计品质宣传
+        lastWeekpropAmr: '-', // 达成率
         preachT3: '-', // 品质宣讲人数TOP3
         propagandaT3: '-', // 品质宣传人数TOP3
         preachAmrT3: '-', // 品质宣讲达成率TOP3
@@ -120,7 +161,9 @@ export default {
         propaganda: '-', // 品质宣传人数
         propAmr: '-' // 品质宣传达成率
       },
-      date
+      date,
+      // 点击记录城市
+      btnIndex: ''
     }
   },
   watch: {
@@ -134,6 +177,7 @@ export default {
         }
       })
       // 重新渲染数据
+      this.setColor(this.dataJson)
       series[0].data = this.dataJson
       myChart.setOption({
         series
@@ -211,17 +255,57 @@ export default {
         name: v.branch,
         value: v.preachAmr
       }))
+      this.setColor(this.dataJson)
       series[0].data = this.dataJson
       myChart.setOption({
         series
       })
       myChart.hideLoading()
-      setTimeout(() => {}, 500)
+    },
+    setColor(dataJson) {
+      for (const k in this.color) {
+        let item = {}
+        if (k === 'ningbo') {
+          item = dataJson.find(v => v.name === '宁波')
+          this.color[k] = this.getColor(item.value)
+        } else if (k === 'shenzheng') {
+          item = dataJson.find(v => v.name === '深圳')
+          this.color[k] = this.getColor(item.value)
+        } else if (k === 'qingdao') {
+          item = dataJson.find(v => v.name === '青岛')
+          this.color[k] = this.getColor(item.value)
+        } else if (k === 'dalian') {
+          item = dataJson.find(v => v.name === '大连')
+          this.color[k] = this.getColor(item.value)
+        } else if (k === 'fuoshan') {
+          item = dataJson.find(v => v.name === '佛山')
+          this.color[k] = this.getColor(item.value)
+        } else if (k === 'suzhou') {
+          item = dataJson.find(v => v.name === '苏州')
+          this.color[k] = this.getColor(item.value)
+        }
+      }
+    },
+    getColor(val) {
+      let color = '#fff'
+      if (val === 0) {
+        return color
+      }
+      if (val >= 1) {
+        return COLOR[0].color
+      }
+      COLOR.forEach(v => {
+        if (v.gte && v.lte && val >= v.gte && val < v.lte) {
+          color = v.color
+        }
+      })
+      return color
     },
     listenInit() {
       document.addEventListener('click', e => {
         if (![].includes.call(e.target.classList, 'btn')) {
           this.tipShow = false
+          this.btnIndex = ''
         }
       })
     },
@@ -232,12 +316,7 @@ export default {
         // 可选，系列 index，可以是一个数组指定多个系列
         seriesIndex: 0
       })
-      myChart.dispatchAction({
-        type: 'hidTip',
-        // 可选，系列 index，可以是一个数组指定多个系列
-        seriesIndex: 0,
-        name: '北京'
-      })
+      this.btnIndex = name
       const tipData = this.dataJson.find(v => v.name === name)
       if (tipData) {
         this.tipData = tipData

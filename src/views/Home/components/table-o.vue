@@ -15,7 +15,7 @@
         <template slot="header">
           <tr>
             <th class="is-center" style="white-space: normal;">分公司</th>
-            <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
+            <th class="is-center" style="white-space: normal;">高职级总人数</th>
             <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
             <th class="is-center" style="white-space: normal;">品质宣讲达成率</th>
             <th class="is-center" style="white-space: normal;">品质宣传人数</th>
@@ -26,9 +26,9 @@
           <td class="is-center">{{ scope.row.branch }}</td>
           <td class="is-center">{{ scope.row.vocational }}</td>
           <td class="is-center">{{ scope.row.preach }}</td>
-          <td class="is-center">{{ scope.row.preachAmr }}%</td>
+          <td class="is-center">{{ (scope.row.preachAmr * 100).toFixed(2) }}%</td>
           <td class="is-center">{{ scope.row.propaganda }}</td>
-          <td class="is-center">{{ scope.row.propAmr }}%</td>
+          <td class="is-center">{{ (scope.row.propAmr*100).toFixed(2) }}%</td>
         </template>
       </mu-data-table>
     </div>

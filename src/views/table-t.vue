@@ -1,9 +1,21 @@
 <template>
   <div>
-    <mu-container class="button-wrapper"  style="padding-top: 20px">
-      <mu-button color="primary" @click="$router.push({ path: '/' })" flat>首页</mu-button>
-      <mu-button color="primary" @click="$router.push({ path: '/dynamic-add' })" flat>全国动态</mu-button>
-      <mu-button color="primary" @click="$router.push({ path: '/table-o' })" flat>达成率</mu-button>
+    <mu-container class="button-wrapper" style="padding-top: 20px">
+      <mu-button color="primary" @click="$router.push({ path: '/' })" flat
+        >首页</mu-button
+      >
+      <mu-button
+        color="primary"
+        @click="$router.push({ path: '/dynamic-add' })"
+        flat
+        >全国动态</mu-button
+      >
+      <mu-button
+        color="primary"
+        @click="$router.push({ path: '/table-o' })"
+        flat
+        >达成率</mu-button
+      >
     </mu-container>
     <h3>分公司活动积分情况</h3>
     <mu-row style="margin: 0rem 0.45rem .2rem">
@@ -12,7 +24,7 @@
           >新增</mu-button
         >
       </mu-col>
-      <mu-col span="12" lg="4" sm="6">
+      <!-- <mu-col span="12" lg="4" sm="6">
         <mu-date-input
           v-model="date"
           label="选择日期"
@@ -22,10 +34,10 @@
           full-width
           @change="onDateChange"
         ></mu-date-input>
-      </mu-col>
+      </mu-col> -->
     </mu-row>
     <div
-      style="margin: 0rem 0.4rem 0; border: 1px solid rgba(204, 204, 204, 0.52);"
+      style="margin: 0rem 0.4rem 0.4rem; border: 1px solid rgba(204, 204, 204, 0.52);"
     >
       <mu-data-table
         no-data-text="暂无数据"
@@ -36,22 +48,32 @@
         <template slot="header">
           <tr>
             <th class="is-center">分公司</th>
-            <th class="is-center" style="white-space: normal;">品质宣讲得分(48)</th>
-            <th class="is-center" style="white-space: normal;">品质宣讲得分(22)</th>
-            <th class="is-center" style="white-space: normal;">风采展示得分(15)</th>
-            <th class="is-center" style="white-space: normal;">媒体宣传得分(10)</th>
-            <th class="is-center" style="white-space: normal;">基础工作得分(5)</th>
+            <th class="is-center" style="white-space: normal;">
+              品质宣讲得分<br />(48)
+            </th>
+            <th class="is-center" style="white-space: normal;">
+              品质宣讲得分<br />(22)
+            </th>
+            <th class="is-center" style="white-space: normal;">
+              风采展示得分<br />(15)
+            </th>
+            <th class="is-center" style="white-space: normal;">
+              媒体宣传得分<br />(10)
+            </th>
+            <th class="is-center" style="white-space: normal;">
+              基础工作得分<br />(5)
+            </th>
             <th class="is-center" style="white-space: normal;">总得分</th>
           </tr>
         </template>
         <template slot-scope="scope">
-          <td>{{ scope.row.branch }}</td>
-          <td class="is-right">{{ scope.row.preach }}</td>
-          <td class="is-right">{{ scope.row.propaganda }}</td>
-          <td class="is-right">{{ scope.row.style }}</td>
-          <td class="is-right">{{ scope.row.media }}</td>
-          <td class="is-right">{{ scope.row.baise }}%</td>
-          <td class="is-right">{{ scope.row.sum }}%</td>
+          <td class="is-center">{{ scope.row.branch }}</td>
+          <td class="is-center">{{ scope.row.preach }}</td>
+          <td class="is-center">{{ scope.row.propaganda }}</td>
+          <td class="is-center">{{ scope.row.style }}</td>
+          <td class="is-center">{{ scope.row.media }}</td>
+          <td class="is-center">{{ scope.row.baise }}</td>
+          <td class="is-center">{{ scope.row.sum }}</td>
           <td class="is-center">
             <mu-container class="button-wrapper">
               <mu-button
@@ -90,6 +112,7 @@
 
         <mu-form-item label="品质宣讲得分(48)" prop="preach">
           <mu-text-field
+            @blur="onBlur()"
             type="number"
             :min="0"
             :max="48"
@@ -101,6 +124,7 @@
         <mu-form-item label="品质宣传得分(22)" prop="propaganda">
           <mu-text-field
             type="number"
+            @blur="onBlur()"
             :min="0"
             :max="22"
             v-model="validateForm.propaganda"
@@ -110,6 +134,7 @@
         <mu-form-item label="风采展示得分(15)" prop="style">
           <mu-text-field
             type="number"
+            @blur="onBlur()"
             :min="0"
             :max="15"
             v-model="validateForm.style"
@@ -119,6 +144,7 @@
         <mu-form-item label="媒体宣传得分(10)" prop="media">
           <mu-text-field
             type="number"
+            @blur="onBlur()"
             :min="0"
             :max="10"
             v-model="validateForm.media"
@@ -128,13 +154,14 @@
         <mu-form-item label="基础工作得分(5)" prop="baise">
           <mu-text-field
             type="number"
+            @blur="onBlur()"
             :min="0"
             :max="5"
             v-model="validateForm.baise"
             prop="baise"
           ></mu-text-field>
         </mu-form-item>
-         <mu-form-item label="总得分" prop="sum">
+        <mu-form-item label="总得分" prop="sum">
           <mu-text-field
             type="number"
             :min="0"
@@ -209,18 +236,7 @@ export default {
           align: 'center'
         }
       ],
-      list: [
-        // {
-        //   id: 1,
-        //   branch: '北京',
-        //   preach: 159,
-        //   propaganda: 6.0,
-        //   style: 24,
-        //   media: 4.0,
-        //   baise: 1,
-        //   sum: 1
-        // }
-      ],
+      list: [],
       openFullscreen: false,
       rules: [{ validate: val => !!val, message: '必须填写' }],
       validateForm: {
@@ -241,11 +257,10 @@ export default {
   },
   methods: {
     // 获取数据
-    getData() {
-      const params = {
-        date: this.date
-      }
-      console.log({ params })
+    async getData() {
+      const res = await api.getTableDataT()
+      console.log(res)
+      this.list = res.data
     },
     onEdit() {
       console.log('编辑')
@@ -268,6 +283,7 @@ export default {
           console.log('form: ', this.validateForm)
           await api.addTableDataT(this.validateForm)
           // console.log(res)
+          this.getData()
           this.clear()
           this.loading = false
           this.openFullscreen = false
@@ -284,6 +300,27 @@ export default {
         media: '', // 媒体宣传得分(10)
         baise: '', // 基础工作得分(5)
         sum: ''
+      }
+    },
+    onBlur() {
+      //   preach: '', // 品质宣讲得分(48)
+      //   propaganda: '', // 品质宣传得分(22)
+      //   style: '', // 风采展示得分(15)
+      //   media: '', // 媒体宣传得分(10)
+      //   baise: '', // 基础工作得分(5)
+      try {
+        const [a, b, c, d, e] = [
+          parseFloat(this.validateForm.preach),
+          parseFloat(this.validateForm.propaganda),
+          parseFloat(this.validateForm.style),
+          parseFloat(this.validateForm.media),
+          parseFloat(this.validateForm.baise)
+        ]
+        if (a && b && c && d && e) {
+          this.validateForm.sum = (a + b + c + d + e).toString()
+        }
+      } catch (error) {
+        console.log(error)
       }
     },
     onDateChange(val) {

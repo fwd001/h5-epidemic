@@ -173,7 +173,7 @@ export default {
     // padding: 0.1rem 0.2rem;
     height: 0.6rem;
     width: 3.52rem;
-    top: -.25rem;
+    top: -.26rem;
     left: 0.3rem;
     color: #fff;
     h3 {

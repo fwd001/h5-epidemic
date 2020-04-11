@@ -15,14 +15,14 @@
         </div>
         <div class="section">
           <div class="item">
-            <span class="diff-val">上周<i> {{dynamic.lastWeekpreach}}</i></span>
+            <span class="diff-val">上周<i> {{dynamic.lastWeekpreach < 0 ? '': '+'}}{{dynamic.lastWeekpreach}}</i></span>
             <span class="sum">{{dynamic.preachSum}}</span>
             <span class="title">本周品质宣讲</span>
           </div>
           <!-- <span class="line"></span> -->
           <div class="item">
             <span class="diff-val"
-              >上周<i> {{dynamic.lastWeekPropaganda}}</i></span
+              >上周<i> {{dynamic.lastWeekPropaganda < 0 ? '': '+'}}{{dynamic.lastWeekPropaganda}}</i></span
             >
             <span class="sum"> {{dynamic.propagandaSum}}</span>
             <span class="title">本周品质宣传</span>
@@ -30,14 +30,14 @@
           <!-- <span class="line"></span> -->
           <div class="item">
             <span class="diff-val"
-              >达成率<i> {{dynamic.lastWeekpreachAmr}}</i></span
+              >达成率<i> {{dynamic.lastWeekpreachAmr}}%</i></span
             >
             <span class="sum"> {{dynamic.preachAmrSum}}</span>
             <span class="title">累计品质宣讲</span>
           </div>
           <div class="item">
             <span class="diff-val"
-              >达成率<i> {{dynamic.lastWeekpropAmr}}</i></span
+              >达成率<i> {{dynamic.lastWeekpropAmr}}%</i></span
             >
             <span class="sum"> {{dynamic.propAmrSum}}</span>
             <span class="title">累计品质宣传</span>
@@ -55,7 +55,7 @@
                 >
               </template>
               <template v-else>
-                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">录入格式错误清以'，'（中文字符）分割</span>
+                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">格式错误用'，'（中文）分割</span>
               </template>
             </span>
           </div>
@@ -73,7 +73,7 @@
                 >
               </template>
               <template v-else>
-                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">录入格式错误清以'，'（中文字符）分割</span>
+                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">格式错误用'，'（中文）分割</span>
               </template>
             </span>
           </div>
@@ -90,7 +90,7 @@
                 >
               </template>
               <template v-else>
-                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">录入格式错误清以'，'（中文字符）分割</span>
+                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">格式错误用'，'（中文）分割</span>
               </template>
             </span>
           </div>
@@ -108,7 +108,7 @@
                 >
               </template>
               <template v-else>
-                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">录入格式错误清以'，'（中文字符）分割</span>
+                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">格式错误用'，'（中文）分割</span>
               </template>
             </span>
           </div>
@@ -148,21 +148,21 @@
     <div class="map-charts">
       <div id="myEcharts"></div>
       <div class="btn-group">
-        <div class="btn" @click="showTip('宁波')">宁波</div>
-        <div class="btn" @click="showTip('深圳')">深圳</div>
-        <div class="btn" @click="showTip('青岛')">青岛</div>
-        <div class="btn" @click="showTip('大连')">大连</div>
-        <div class="btn" @click="showTip('佛山')">佛山</div>
-        <div class="btn" @click="showTip('苏州')">苏州</div>
+        <div :class="['btn', {active: btnIndex === '宁波'}]" :style="{backgroundColor: color.ningbo}" @click="showTip('宁波')">宁波</div>
+        <div :class="['btn', {active: btnIndex === '深圳'}]" :style="{backgroundColor: color.shenzheng}" @click="showTip('深圳')">深圳</div>
+        <div :class="['btn', {active: btnIndex === '青岛'}]" :style="{backgroundColor: color.qingdao}" @click="showTip('青岛')">青岛</div>
+        <div :class="['btn', {active: btnIndex === '大连'}]" :style="{backgroundColor: color.dalian}" @click="showTip('大连')">大连</div>
+        <div :class="['btn', {active: btnIndex === '佛山'}]" :style="{backgroundColor: color.fuoshan}" @click="showTip('佛山')">佛山</div>
+        <div :class="['btn', {active: btnIndex === '苏州'}]" :style="{backgroundColor: color.suzhou}" @click="showTip('苏州')">苏州</div>
       </div>
       <div class="pieces"><img src="../../assets/images/tuli.png" alt="pieces"></div>
       <div class="showTip" v-show="tipShow">
         <ul>
           <li>{{tipData.name}}</li>
           <li>宣讲人数：{{tipData.preach}}</li>
-          <li>达成率：{{tipData.preachAmr}}%</li>
+          <li>达成率：{{(tipData.preachAmr*100).toFixed(2)}}%</li>
           <li>宣传人数：{{tipData.propaganda}}</li>
-          <li>达成率：{{tipData.propAmr}}%</li>
+          <li>达成率：{{(tipData.propAmr*100).toFixed(2)}}%</li>
         </ul>
       </div>
       <div class="btn-box">
