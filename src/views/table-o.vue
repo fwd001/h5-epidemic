@@ -64,9 +64,11 @@
           <td class="is-center">{{ scope.row.branch }}</td>
           <td class="is-center">{{ scope.row.vocational }}</td>
           <td class="is-center">{{ scope.row.preach }}</td>
-          <td class="is-center">{{ (scope.row.preachAmr * 100).toFixed(2) }}%</td>
+          <td class="is-center">
+            {{ (scope.row.preachAmr * 100).toFixed(2) }}%
+          </td>
           <td class="is-center">{{ scope.row.propaganda }}</td>
-          <td class="is-center">{{ (scope.row.propAmr*100).toFixed(2) }}%</td>
+          <td class="is-center">{{ (scope.row.propAmr * 100).toFixed(2) }}%</td>
           <td class="is-center">
             <mu-container class="button-wrapper">
               <mu-button small flat color="primary">编辑</mu-button>
@@ -114,7 +116,11 @@
             prop="preach"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item help-text='' label="品质宣讲达成率（自动计算 {$0}%）" prop="preachAmr">
+        <mu-form-item
+          help-text=""
+          label="品质宣讲达成率（自动计算 {$0}%）"
+          prop="preachAmr"
+        >
           <mu-text-field
             v-model="validateForm.preachAmr"
             prop="preachAmr"
@@ -234,12 +240,18 @@ export default {
         if (result) {
           this.loading = true
           console.log('form: ', this.validateForm)
-          await api.addTableDataO(this.validateForm)
-          // console.log(res)
-          this.getData()
-          this.clear()
-          this.loading = false
-          this.openFullscreen = false
+          try {
+            await api.addTableDataO(this.validateForm)
+            // console.log(res)
+            this.getData()
+            this.clear()
+            this.loading = false
+            this.openFullscreen = false
+          } catch (error) {
+            this.loading = false
+            console.log(error, this.$toast)
+            this.$toast.error('保存失败')
+          }
         }
       })
     },
@@ -256,7 +268,9 @@ export default {
     },
     onBlur(a, b, c) {
       if (this.validateForm[a] && this.validateForm[b]) {
-        this.validateForm[c] = (this.validateForm[b] / this.validateForm[a]).toFixed(4)
+        this.validateForm[c] = (
+          this.validateForm[b] / this.validateForm[a]
+        ).toFixed(4)
       }
     },
     onDateChange(val) {

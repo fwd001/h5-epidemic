@@ -43,7 +43,7 @@ import {
   // Select,
   // SlidePicker,
   // Slider,
-  // Snackbar,
+  Snackbar,
   // Stepper,
   // SubHeader,
   // Switch,
@@ -93,7 +93,7 @@ Vue.use(Progress)
 // Vue.use(Select)
 // Vue.use(SlidePicker)
 // Vue.use(Slider)
-// Vue.use(Snackbar)
+Vue.use(Snackbar)
 // Vue.use(Stepper)
 // Vue.use(SubHeader)
 // Vue.use(Switch)

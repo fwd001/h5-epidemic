@@ -274,6 +274,7 @@ export default {
             this.openFullscreen = false
           } catch (error) {
             this.loading = false
+            console.log(error, this.$toast)
             this.$toast.error('保存失败')
           }
         }

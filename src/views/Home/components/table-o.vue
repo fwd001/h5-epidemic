@@ -15,7 +15,7 @@
         <template slot="header">
           <tr>
             <th class="is-center" style="white-space: normal;">分公司</th>
-            <th class="is-center" style="white-space: normal;">高职级总人数</th>
+            <th class="is-center" style="white-space: normal; padding: 0 .02rem">高职级总人数</th>
             <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
             <th class="is-center" style="white-space: normal;">品质宣讲达成率</th>
             <th class="is-center" style="white-space: normal;">品质宣传人数</th>

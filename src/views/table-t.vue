@@ -281,12 +281,18 @@ export default {
         if (result) {
           this.loading = true
           console.log('form: ', this.validateForm)
-          await api.addTableDataT(this.validateForm)
-          // console.log(res)
-          this.getData()
-          this.clear()
-          this.loading = false
-          this.openFullscreen = false
+          try {
+            await api.addTableDataT(this.validateForm)
+            // console.log(res)
+            this.getData()
+            this.clear()
+            this.loading = false
+            this.openFullscreen = false
+          } catch (error) {
+            this.loading = false
+            console.log(error, this.$toast)
+            this.$toast.error('保存失败')
+          }
         }
       })
     },
