@@ -1,11 +1,11 @@
 <div class="home">
   <header>
-    <img
-      style="height: 100%;"
-      src="../../assets/images/top.jpeg"
-      alt="toppng"
-    />
-    <div class='secret' @click="$router.push({path: '/dynamic-add'})"></div>
+    <div class="logo1">
+      <img src="../../assets/images/logo1.png" alt="" />
+    </div>
+    <img class="logo2" src="../../assets/images/top.jpeg" alt="toppng" />
+    <div class="secret" @click="$router.push({path: '/dynamic-add'})"></div>
+    <div class="logo3"></div>
   </header>
   <section>
     <div class="global-data">
@@ -19,7 +19,7 @@
             <span class="sum">{{dynamic.preachSum}}</span>
             <span class="title">本周品质宣讲</span>
           </div>
-          <span class="line"></span>
+          <!-- <span class="line"></span> -->
           <div class="item">
             <span class="diff-val"
               >上周<i> {{dynamic.lastWeekPropaganda}}</i></span
@@ -27,7 +27,7 @@
             <span class="sum"> {{dynamic.propagandaSum}}</span>
             <span class="title">本周品质宣传</span>
           </div>
-          <span class="line"></span>
+          <!-- <span class="line"></span> -->
           <div class="item">
             <span class="diff-val"
               >达成率<i> {{dynamic.lastWeekpreachAmr}}</i></span
@@ -45,34 +45,72 @@
           <span class="line"></span>
 
           <div class="item">
-            <span class="title">
-              <p>品质宣讲人数</p>
-              <p>TOP3</p>
+            <span class="diff-val">
+              品质宣讲人数<i style="font-weight: 700;"> TOP3</i>
             </span>
-            <span class="sum area"> {{dynamic.preachT3}}</span>
+            <span class="sum area">
+              <template v-if="dynamic.preachT3.includes('，')">
+                <span v-for="(item, index) in dynamic.preachT3.split('，')" :key="index"
+                  >{{item}}</span
+                >
+              </template>
+              <template v-else>
+                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">录入格式错误清以'，'（中文字符）分割</span>
+              </template>
+            </span>
           </div>
-          <span class="line"></span>
+          <!-- <span class="line"></span> -->
           <div class="item">
-            <span class="title">
-              <p>品质宣传人数</p>
-              <p>TOP3</p>
+            <span class="diff-val">
+              品质宣传人数<i style="font-weight: 700;"> TOP3</i>
             </span>
-            <span class="sum area"> {{dynamic.propagandaT3}}</span>
+            <span class="sum area">
+              <template v-if="dynamic.propagandaT3.includes('，')">
+                <span
+                  v-for="(item, index) in dynamic.propagandaT3.split('，')"
+                  :key="index"
+                  >{{item}}</span
+                >
+              </template>
+              <template v-else>
+                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">录入格式错误清以'，'（中文字符）分割</span>
+              </template>
+            </span>
           </div>
           <div class="item">
-            <span class="title">
-              <p>品质宣讲达成率</p>
-              <p>TOP3</p>
+            <span class="diff-val">
+              品质宣讲达成率<i style="font-weight: 700;"> TOP3</i>
             </span>
-            <span class="sum area"> {{dynamic.preachAmrT3}}</span>
+            <span class="sum area">
+              <template v-if="dynamic.preachAmrT3.includes('，')">
+                <span
+                  v-for="(item, index) in dynamic.preachAmrT3.split('，')"
+                  :key="index"
+                  >{{item}}</span
+                >
+              </template>
+              <template v-else>
+                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">录入格式错误清以'，'（中文字符）分割</span>
+              </template>
+            </span>
           </div>
-          <span class="line"></span>
+          <!-- <span class="line"></span> -->
           <div class="item">
-            <span class="title">
-              <p>品质宣传达成率</p>
-              <p>TOP3</p>
+            <span class="diff-val">
+              品质宣讲达成率<i style="font-weight: 700;"> TOP3</i>
             </span>
-            <span class="sum area"> {{dynamic.propAmrT3}}</span>
+            <span class="sum area">
+              <template v-if="dynamic.propAmrT3.includes('，')">
+                <span
+                  v-for="(item, index) in dynamic.propAmrT3.split('，')"
+                  :key="index"
+                  >{{item}}</span
+                >
+              </template>
+              <template v-else>
+                <span style="width: 100%; font-size: .2rem; font-weight: 200; color: #000;">录入格式错误清以'，'（中文字符）分割</span>
+              </template>
+            </span>
           </div>
         </div>
         <div class="footer">
@@ -99,7 +137,7 @@
             <mu-button
               slot="actions"
               flat
-              color="primary"
+              color="#cb3044"
               @click="explanation = false"
               >好的</mu-button
             >
@@ -109,14 +147,15 @@
     </div>
     <div class="map-charts">
       <div id="myEcharts"></div>
-      <mu-container class="button-wrapper">
-        <mu-button small @click="showTip('宁波')">宁波</mu-button>
-        <mu-button small @click="showTip('深圳')">深圳</mu-button>
-        <mu-button small @click="showTip('青岛')">青岛</mu-button>
-        <mu-button small @click="showTip('大连')">大连</mu-button>
-        <mu-button small @click="showTip('佛山')">佛山</mu-button>
-        <mu-button small @click="showTip('苏州')">苏州</mu-button>
-      </mu-container>
+      <div class="btn-group">
+        <div class="btn" @click="showTip('宁波')">宁波</div>
+        <div class="btn" @click="showTip('深圳')">深圳</div>
+        <div class="btn" @click="showTip('青岛')">青岛</div>
+        <div class="btn" @click="showTip('大连')">大连</div>
+        <div class="btn" @click="showTip('佛山')">佛山</div>
+        <div class="btn" @click="showTip('苏州')">苏州</div>
+      </div>
+      <div class="pieces"><img src="../../assets/images/tuli.png" alt="pieces"></div>
       <div class="showTip" v-show="tipShow">
         <ul>
           <li>{{tipData.name}}</li>
@@ -150,7 +189,7 @@
     <div class="table-t" style="margin-bottom: .5rem">
       <table-t></table-t>
       <div style="text-align: center; padding: 5px;">
-        <mu-button flat color="primary" @click="openScroll = !openScroll"
+        <mu-button flat color="#cb3044" @click="openScroll = !openScroll"
           >积分规则说明</mu-button
         >
         <mu-dialog
@@ -202,7 +241,7 @@
           <mu-button
             slot="actions"
             flat
-            color="primary"
+            color="#cb3044"
             @click="openScroll = false"
             >好的</mu-button
           >

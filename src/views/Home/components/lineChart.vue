@@ -1,6 +1,9 @@
 <template>
   <div class="lineCharts">
     <div id="lineCharts">line</div>
+    <div class="header">
+      <h3>全系统活动开展趋势图</h3>
+    </div>
   </div>
 </template>
 
@@ -9,6 +12,7 @@ import echarts from '@/utils/echarts'
 import dayjs from 'dayjs'
 import * as api from '@/api/index'
 let myChart = null
+const beCounted = window.screen.width / 375
 
 // const dataJson = {
 //   xAxis: ['4.3', '4.10', '4.17', '4.24', '5.1', '5.8', '5.15', '5.22', '5.29'],
@@ -23,13 +27,13 @@ let myChart = null
 
 const legend = {
   icon: 'roundRect',
-  itemHeight: 8,
-  itemWidth: 8,
+  itemHeight: 8 * beCounted,
+  itemWidth: 8 * beCounted,
   right: 0,
   top: 20,
   textStyle: {
     // 图例文字的样式
-    fontSize: 10
+    fontSize: 8 * beCounted
   },
   data: ['品质宣讲', '品质宣传']
 }
@@ -51,7 +55,7 @@ const xAxis = {
     }
   },
   axisLabel: {
-    fontSize: 10,
+    fontSize: 8 * beCounted,
     color: '#000'
   },
   boundaryGap: false,
@@ -68,7 +72,7 @@ const yAxis = {
     }
   },
   axisLabel: {
-    fontSize: 10,
+    fontSize: 8 * beCounted,
     color: '#000'
   },
   type: 'value'
@@ -114,13 +118,6 @@ export default {
       const option = {
         color: ['#ed414b', '#fad247'],
         grid,
-        title: {
-          text: '全系统活动开展趋势图',
-          top: 18,
-          textStyle: {
-            fontSize: 14
-          }
-        },
         tooltip: {
           trigger: 'axis'
         },
@@ -161,10 +158,30 @@ export default {
 <style lang="less" scoped>
 .lineCharts {
   margin: 0.613333rem 0.4rem 0;
-  border: 0.5px solid #e7e9eb;
+  box-shadow: 0 0.1rem 0.3rem 0 rgba(194, 200, 219, 0.6);
   box-sizing: border-box;
   border-radius: 0.16rem;
   margin-bottom: 0.6rem;
+  position: relative;
+ .header {
+    position: absolute;
+    z-index: 1;
+    background-image: url('../../../assets/images/line.png');
+    background-repeat: no-repeat;
+    background-size: 106%;
+    background-position: -0.11rem -0.06rem;
+    // padding: 0.1rem 0.2rem;
+    height: 0.6rem;
+    width: 3.52rem;
+    top: -.25rem;
+    left: 0.3rem;
+    color: #fff;
+    h3 {
+      font-size: 0.28rem;
+      text-align: center;
+      line-height: 2;
+    }
+  }
 }
 #lineCharts {
   user-select: none;

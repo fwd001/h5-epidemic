@@ -8,7 +8,7 @@ import lineChart from './components/lineChart'
 import dayjs from 'dayjs'
 
 let myChart = null
-
+const beCounted = window.screen.width / 375
 const tooltip = {
   triggerOn: 'click',
   formatter: function(e, t, n) {
@@ -167,7 +167,7 @@ export default {
           label: {
             normal: {
               show: !0,
-              fontSize: '10',
+              fontSize: 8 * beCounted,
               color: 'rgba(0,0,0,0.7)'
             }
           },
@@ -220,7 +220,7 @@ export default {
     },
     listenInit() {
       document.addEventListener('click', e => {
-        if (![].includes.call(e.target.classList, 'mu-ripple-wrapper')) {
+        if (![].includes.call(e.target.classList, 'btn')) {
           this.tipShow = false
         }
       })

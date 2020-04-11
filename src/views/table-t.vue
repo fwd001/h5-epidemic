@@ -1,14 +1,14 @@
 <template>
   <div>
     <mu-container class="button-wrapper"  style="padding-top: 20px">
-      <mu-button @click="$router.push({ path: '/' })" flat>首页</mu-button>
-      <mu-button @click="$router.push({ path: '/dynamic-add' })" flat>全国动态</mu-button>
-      <mu-button @click="$router.push({ path: '/table-o' })" flat>达成率</mu-button>
+      <mu-button color="primary" @click="$router.push({ path: '/' })" flat>首页</mu-button>
+      <mu-button color="primary" @click="$router.push({ path: '/dynamic-add' })" flat>全国动态</mu-button>
+      <mu-button color="primary" @click="$router.push({ path: '/table-o' })" flat>达成率</mu-button>
     </mu-container>
     <h3>分公司活动积分情况</h3>
     <mu-row style="margin: 0rem 0.45rem .2rem">
       <mu-col span="12" lg="4" sm="6">
-        <mu-button @click="openFullscreen = true" color="primary"
+        <mu-button @click="openFullscreen = true" color="#cb3044"
           >新增</mu-button
         >
       </mu-col>
@@ -57,7 +57,7 @@
               <mu-button
                 small
                 flat
-                color="primary"
+                color="#cb3044"
                 @click="onEdit(scope.row.id)"
                 >编辑</mu-button
               >
@@ -146,14 +146,14 @@
       <mu-button
         slot="actions"
         flat
-        color="primary"
+        color="#cb3044"
         @click="
           clear()
           openFullscreen = false
         "
         >关闭</mu-button
       >
-      <mu-button slot="actions" flat color="primary" @click="submit"
+      <mu-button slot="actions" flat color="#cb3044" @click="submit"
         >保存</mu-button
       >
     </mu-dialog>
@@ -295,7 +295,7 @@ export default {
 
 <style lang="less" scoped>
 h3 {
-  font-size: 0.35rem;
+  font-size: 0.32rem;
   margin: 0.2rem 0.45rem;
 }
 .button-wrapper {

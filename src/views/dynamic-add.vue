@@ -1,15 +1,15 @@
 <template>
   <div>
     <mu-container style="padding-top: 20px" class="button-wrapper">
-      <mu-button @click="$router.push({ path: '/' })" flat>首页</mu-button>
-      <mu-button @click="$router.push({ path: '/table-o' })" flat>达成率</mu-button>
-      <mu-button @click="$router.push({ path: '/table-t' })" flat>积分</mu-button>
+      <mu-button color="primary" @click="$router.push({ path: '/' })" flat>首页</mu-button>
+      <mu-button color="primary" @click="$router.push({ path: '/table-o' })" flat>达成率</mu-button>
+      <mu-button color="primary" @click="$router.push({ path: '/table-t' })" flat>积分</mu-button>
     </mu-container>
 
     <h3>全国动态</h3>
     <mu-row style="margin: 0rem 0.45rem .2rem">
       <mu-col span="12" lg="4" sm="6">
-        <mu-button @click="openFullscreen = true" color="primary"
+        <mu-button @click="openFullscreen = true" color="#cb3044"
           >新增</mu-button
         >
       </mu-col>
@@ -40,6 +40,7 @@
       <mu-form ref="form" :model="validateForm" class="mu-demo-form">
         <mu-form-item label="本周品质宣讲" prop="preachSum">
           <mu-text-field
+            type="number"
             v-model="validateForm.preachSum"
             prop="preachSum"
           ></mu-text-field>
@@ -47,7 +48,6 @@
 
         <mu-form-item label="上周品质宣讲" prop="lastWeekpreach">
           <mu-text-field
-            type="number"
             v-model="validateForm.lastWeekpreach"
             prop="lastWeekpreach"
           ></mu-text-field>
@@ -62,7 +62,6 @@
         </mu-form-item>
         <mu-form-item label="上周品质宣传" prop="lastWeekPropaganda">
           <mu-text-field
-            type="number"
             v-model="validateForm.lastWeekPropaganda"
             prop="lastWeekPropaganda"
           ></mu-text-field>
@@ -73,7 +72,13 @@
             prop="preachAmrSum"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="上周品质宣讲达成率" prop="propAmrSum">
+        <mu-form-item label="上周品质宣讲达成率" prop="lastWeekpreachAmr">
+          <mu-text-field
+            v-model="validateForm.lastWeekpreachAmr"
+            prop="lastWeekpreachAmr"
+          ></mu-text-field>
+        </mu-form-item>
+        <mu-form-item label="本周品质宣传达成率" prop="propAmrSum">
           <mu-text-field
             v-model="validateForm.propAmrSum"
             prop="propAmrSum"
@@ -86,22 +91,22 @@
             prop="lastWeekpropAmr"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="品质宣讲人数TOP3" prop="preachT3">
+        <mu-form-item  help-text="请以中文逗号分割，示例‘北京，上海，新疆’" label="品质宣讲人数TOP3" prop="preachT3">
           <mu-text-field v-model="validateForm.preachT3"></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="品质宣传人数TOP3" prop="propagandaT3">
+        <mu-form-item help-text="请以中文逗号分割，示例‘北京，上海，新疆’" label="品质宣传人数TOP3" prop="propagandaT3">
           <mu-text-field
             v-model="validateForm.propagandaT3"
             prop="propagandaT3"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="品质宣讲达成率TOP3" prop="preachAmrT3">
+        <mu-form-item help-text="请以中文逗号分割，示例‘北京，上海，新疆’" label="品质宣讲达成率TOP3" prop="preachAmrT3">
           <mu-text-field
             v-model="validateForm.preachAmrT3"
             prop="preachAmrT3"
           ></mu-text-field>
         </mu-form-item>
-        <mu-form-item label="品质宣传达成率TOP3" prop="propAmrT3">
+        <mu-form-item help-text="请以中文逗号分割，示例‘北京，上海，新疆’" label="品质宣传达成率TOP3" prop="propAmrT3">
           <mu-text-field
             v-model="validateForm.propAmrT3"
             prop="propAmrT3"
@@ -111,14 +116,14 @@
       <mu-button
         slot="actions"
         flat
-        color="primary"
+        color="#cb3044"
         @click="
           clear()
           openFullscreen = false
         "
         >关闭</mu-button
       >
-      <mu-button slot="actions" flat color="primary" @click="submit"
+      <mu-button slot="actions" flat color="#cb3044" @click="submit"
         >保存</mu-button
       >
     </mu-dialog>
@@ -146,10 +151,10 @@ export default {
         lastWeekpreachAmr: '', // 上周品质宣讲达成率
         propAmrSum: '', // 本周品质宣传达成率
         lastWeekpropAmr: '', // 上周品质宣传达成率
-        preachT3: '', // 品质宣讲人数TOP3
-        propagandaT3: '', // 品质宣传人数TOP3
-        preachAmrT3: '', // 品质宣讲达成率TOP3
-        propAmrT3: '' // 品质宣传达成率TOP3
+        preachT3: '-，-，-', // 品质宣讲人数TOP3
+        propagandaT3: '-，-，-', // 品质宣传人数TOP3
+        preachAmrT3: '-，-，-', // 品质宣讲达成率TOP3
+        propAmrT3: '-，-，-' // 品质宣传达成率TOP3
       },
       loading: false
     }
@@ -185,11 +190,16 @@ export default {
         if (result) {
           this.loading = true
           console.log('form: ', this.validateForm)
-          await api.addDynamic(this.validateForm)
-          // console.log('res', res)
-          this.clear()
-          this.loading = false
-          this.openFullscreen = false
+          try {
+            await api.addDynamic(this.validateForm)
+            // console.log('res', res)
+            this.clear()
+            this.loading = false
+            this.openFullscreen = false
+          } catch (error) {
+            this.loading = false
+            this.$toast.error('保存失败')
+          }
         }
       })
     },
@@ -219,7 +229,7 @@ export default {
 
 <style lang="less" scoped>
 h3 {
-  font-size: 0.35rem;
+  font-size: 0.32rem;
   margin: 0.2rem 0.45rem;
 }
 .button-wrapper {

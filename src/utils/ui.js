@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Message from 'muse-ui-message'
 import Loading from 'muse-ui-loading'
 import Helpers from 'muse-ui/lib/Helpers'
+import Toast from 'muse-ui-toast'
 
 import 'muse-ui/lib/styles/base.less'
 import 'muse-ui-message/dist/muse-ui-message.css'
@@ -53,6 +54,7 @@ import {
 } from 'muse-ui'
 import 'muse-ui/lib/styles/theme.less'
 
+Vue.use(Toast)
 Vue.use(Helpers)
 Vue.use(Loading)
 Vue.use(Message)

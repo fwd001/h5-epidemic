@@ -5496,6 +5496,11 @@ muse-ui-message@^0.2.1:
   resolved "https://registry.yarnpkg.com/muse-ui-message/-/muse-ui-message-0.2.1.tgz#01689945b2e82236981ead78e3f34d80fe690824"
   integrity sha512-qxV4uO6sxM11t81PpzlqmJGRjmMepZIkiWDr59O9P4mYJ7NsO1ztCN2nhyH8GBS60gs7UzOWSOCvJAp2smd8fg==
 
+muse-ui-toast@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/muse-ui-toast/-/muse-ui-toast-0.3.0.tgz#572bc6c250579c3d6f4dafc8535e631c401b8db0"
+  integrity sha512-SKCpeqOzrfslRdmU+8di9fZ7VtFlfgl56OfwqHXBnYxCEEvHEzHidBf0ixGdr5RohR8Wn+OTG/mDnJBu962Qfg==
+
 muse-ui@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/muse-ui/-/muse-ui-3.0.2.tgz#f292e8a063d625d35b1dce1b1504bc0cccd78e65"

@@ -113,7 +113,13 @@ export default {
 
 <style lang="less" scoped>
 h3 {
-  font-size: 0.3rem;
-  margin: 0.2rem 0.45rem;
+  font-size: 0.32rem;
+  height: .75rem;
+  line-height: .75rem;
+  background: #ce3846;
+  text-align: center;
+  color: #fff;
+  border-radius: .3rem .3rem 0 0;
+  margin: 0.2rem 0.4rem 0;
 }
 </style>

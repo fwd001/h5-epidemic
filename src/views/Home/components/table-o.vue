@@ -75,16 +75,7 @@ export default {
           align: 'center'
         }
       ],
-      list: [
-        // {
-        //   branch: '北京',
-        //   vocational: 159,
-        //   preach: 6.0,
-        //   preachAmr: 24,
-        //   propaganda: 4.0,
-        //   propAmr: 1
-        // }
-      ]
+      list: []
     }
   },
   created() {
@@ -94,7 +85,6 @@ export default {
   methods: {
     async getData() {
       const res = await api.getTableDataO()
-      console.log(res)
       this.list = res.data
     }
   }
@@ -103,7 +93,13 @@ export default {
 
 <style lang="less" scoped>
 h3 {
-  font-size: 0.3rem;
-  margin: 0.2rem 0.45rem;
+  font-size: 0.32rem;
+  height: .7rem;
+  line-height: .7rem;
+  background: #ce3846;
+  text-align: center;
+  color: #fff;
+  border-radius: .3rem .3rem 0 0;
+  margin: 0.2rem 0.4rem 0;
 }
 </style>
