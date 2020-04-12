@@ -109,7 +109,7 @@
           success: function(data) {
             //  console.log(data.data)
             var res = data.data || ''
-            console.log({res})
+            // console.log({res})
             res = JSON.parse(res)
             var newArr = []
             //newArr的数据格式为：
@@ -130,8 +130,8 @@
                 }
                 newArr.push(json)
               }
-              console.log(newArr)
-              console.log(JSON.stringify(newArr))
+              // console.log(newArr)
+              // console.log(JSON.stringify(newArr))
               //使用指定的配置项和数据显示图表
               myChart.setOption({
                 series: [

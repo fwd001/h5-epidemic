@@ -1,7 +1,8 @@
 <template>
   <div>
     <h3>
-      公司活动达<span @click="$router.push({ path: '/table-o' })">成率</span>
+      <!-- 公司活动达<span @click="$router.push({ path: '/table-o' })">成率</span> -->
+      公司活动达成率
     </h3>
     <div
       style="margin: 0rem 0.4rem 0; border: 1px solid rgba(204, 204, 204, 0.52);"
@@ -15,7 +16,7 @@
         <template slot="header">
           <tr>
             <th class="is-center" style="white-space: normal;">分公司</th>
-            <th class="is-center" style="white-space: normal; padding: 0 .02rem">高职级总人数</th>
+            <th class="is-center" style="white-space: normal;">高职级总人数</th>
             <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
             <th class="is-center" style="white-space: normal;">品质宣讲达成率</th>
             <th class="is-center" style="white-space: normal;">品质宣传人数</th>
@@ -47,31 +48,31 @@ export default {
         { title: '分公司', width: 50 * beCounted, name: 'branch' },
         {
           title: '高职级总人数',
-          width: 65 * beCounted,
+          width: 57 * beCounted,
           name: 'vocational'
         },
         {
           title: '品质宣讲人数',
           name: 'preach',
-          width: 55 * beCounted,
+          width: 57 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣讲达成率',
           name: 'preachAmr',
-          width: 55 * beCounted,
+          width: 57 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣传人数',
           name: 'propaganda',
-          width: 55 * beCounted,
+          width: 57 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣传达成率',
           name: 'propAmr',
-          width: 55 * beCounted,
+          width: 57 * beCounted,
           align: 'center'
         }
       ],

@@ -38,7 +38,6 @@ const COLOR = [
     color: '#f7cdd0'
   }
 ]
-console.log(COLOR)
 
 let myChart = null
 const beCounted = window.screen.width / 375

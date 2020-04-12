@@ -173,31 +173,31 @@ export default {
         { title: '分公司', width: 50 * beCounted, name: 'branch' },
         {
           title: '高职级总人数',
-          width: 65 * beCounted,
+          width: 57 * beCounted,
           name: 'vocational'
         },
         {
           title: '品质宣讲人数',
           name: 'preach',
-          width: 55 * beCounted,
+          width: 57 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣讲达成率',
           name: 'preachAmr',
-          width: 55 * beCounted,
+          width: 57 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣传人数',
           name: 'propaganda',
-          width: 55 * beCounted,
+          width: 57 * beCounted,
           align: 'center'
         },
         {
           title: '品质宣传达成率',
           name: 'propAmr',
-          width: 55 * beCounted,
+          width: 57 * beCounted,
           align: 'center'
         }
       ],

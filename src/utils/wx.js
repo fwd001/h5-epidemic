@@ -5,12 +5,12 @@ import * as api from '../api'
 api
   .getWxTickt()
   .then(result => {
-    console.log(result.data.jsapi_ticket)
-    console.log(result.data.nonceStr)
-    console.log(result.data.signature)
-    console.log(result.data.timestamp)
-    console.log(result.data.appid)
-    console.log(result.data.url)
+    console.log('wx:', result.data.jsapi_ticket)
+    console.log('wx:', result.data.nonceStr)
+    console.log('wx:', result.data.signature)
+    console.log('wx:', result.data.timestamp)
+    console.log('wx:', result.data.appid)
+    console.log('wx:', result.data.url)
 
     wx.config({
       debug: false,

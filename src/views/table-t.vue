@@ -49,19 +49,19 @@
           <tr>
             <th class="is-center">分公司</th>
             <th class="is-center" style="white-space: normal;">
-              品质宣讲得分<br />(48)
+              品质宣讲(48)
             </th>
             <th class="is-center" style="white-space: normal;">
-              品质宣讲得分<br />(22)
+              品质宣讲(22)
             </th>
             <th class="is-center" style="white-space: normal;">
-              风采展示得分<br />(15)
+              风采展示(15)
             </th>
             <th class="is-center" style="white-space: normal;">
-              媒体宣传得分<br />(10)
+              媒体宣传(10)
             </th>
             <th class="is-center" style="white-space: normal;">
-              基础工作得分<br />(5)
+              基础工作(5)
             </th>
             <th class="is-center" style="white-space: normal;">总得分</th>
           </tr>
@@ -201,31 +201,31 @@ export default {
       columns: [
         { title: '分公司', width: 44 * beCounted, name: 'branch' },
         {
-          title: '品质宣讲得分(48)',
-          width: 50 * beCounted,
+          title: '品质宣讲(48)',
+          width: 48 * beCounted,
           name: 'preach'
         },
         {
-          title: '品质宣传得分(22)',
-          width: 50 * beCounted,
+          title: '品质宣传(22)',
+          width: 48 * beCounted,
           name: 'propaganda',
           align: 'center'
         },
         {
-          title: '风采展示得分(15)',
+          title: '风采展示(15)',
           width: 48 * beCounted,
           name: 'style',
           align: 'center'
         },
         {
-          title: '媒体宣传得分(10)',
-          width: 46 * beCounted,
+          title: '媒体宣传(10)',
+          width: 48 * beCounted,
           name: 'media',
           align: 'center'
         },
         {
-          title: '基础工作得分(5)',
-          width: 46 * beCounted,
+          title: '基础工作(5)',
+          width: 48 * beCounted,
           name: 'baise',
           align: 'center'
         },
@@ -259,7 +259,7 @@ export default {
     // 获取数据
     async getData() {
       const res = await api.getTableDataT()
-      console.log(res)
+      // console.log(res)
       this.list = res.data
     },
     onEdit() {
