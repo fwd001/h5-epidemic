@@ -17,7 +17,7 @@
           <tr>
             <th class="is-center" style="white-space: normal;">分公司</th>
             <th class="is-center" style="white-space: normal;">品质宣讲(48)</th>
-            <th class="is-center" style="white-space: normal;">品质宣讲(22)</th>
+            <th class="is-center" style="white-space: normal;">品质宣传(22)</th>
             <th class="is-center" style="white-space: normal;">风采展示(15)</th>
             <th class="is-center" style="white-space: normal;">媒体宣传(10)</th>
             <th class="is-center" style="white-space: normal;">基础工作(5)</th>
