@@ -18,7 +18,7 @@
       >
     </mu-container>
 
-    <h3>公司活动达成率</h3>
+    <h3>分公司活动达成率</h3>
     <mu-row style="margin: 0rem 0.45rem .2rem">
       <mu-col span="12" lg="4" sm="6">
         <mu-button @click="openFullscreen = true" color="#cb3044"
@@ -49,7 +49,7 @@
         <template slot="header">
           <tr>
             <th class="is-center">分公司</th>
-            <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
+            <th class="is-center" style="white-space: normal;">高职级总人数</th>
             <th class="is-center" style="white-space: normal;">品质宣讲人数</th>
             <th class="is-center" style="white-space: normal;">
               品质宣讲达成率
@@ -57,6 +57,9 @@
             <th class="is-center" style="white-space: normal;">品质宣传人数</th>
             <th class="is-center" style="white-space: normal;">
               品质宣传达成率
+            </th>
+             <th class="is-center" style="white-space: normal;">
+              编辑
             </th>
           </tr>
         </template>
@@ -71,10 +74,10 @@
           <td class="is-center">{{ (scope.row.propAmr * 100).toFixed(2) }}%</td>
           <td class="is-center">
             <mu-container class="button-wrapper">
-              <mu-button small flat color="primary">编辑</mu-button>
-              <mu-button small flat color="secondary" @click="onDelete"
+              <a href="javascript:;" @click="onEdit(scope.row)">编辑</a>
+              <!-- <mu-button small flat color="secondary" @click="onDelete"
                 >删除</mu-button
-              >
+              > -->
             </mu-container>
           </td>
         </template>
@@ -199,6 +202,12 @@ export default {
           name: 'propAmr',
           width: 57 * beCounted,
           align: 'center'
+        },
+        {
+          title: '编辑',
+          name: 'option',
+          width: 57 * beCounted,
+          align: 'center'
         }
       ],
       list: [],
@@ -223,6 +232,14 @@ export default {
     async getData() {
       const res = await api.getTableDataO()
       this.list = res.data
+    },
+    // 编辑
+    onEdit(row) {
+      console.log('编辑', row)
+      for (const k in this.validateForm) {
+        this.validateForm[k] = row[k]
+      }
+      this.openFullscreen = true
     },
     onDelete() {
       this.$confirm('确定要删除？', '提示', {

@@ -64,6 +64,7 @@
               基础工作(5)
             </th>
             <th class="is-center" style="white-space: normal;">总得分</th>
+            <th class="is-center" style="white-space: normal;">编辑</th>
           </tr>
         </template>
         <template slot-scope="scope">
@@ -76,16 +77,10 @@
           <td class="is-center">{{ scope.row.sum }}</td>
           <td class="is-center">
             <mu-container class="button-wrapper">
-              <mu-button
-                small
-                flat
-                color="#cb3044"
-                @click="onEdit(scope.row.id)"
-                >编辑</mu-button
-              >
-              <mu-button small flat color="secondary" @click="onDelete"
+              <a href="javascript:;" @click="onEdit(scope.row)">编辑</a>
+              <!-- <mu-button small flat color="secondary" @click="onDelete"
                 >删除</mu-button
-              >
+              > -->
             </mu-container>
           </td>
         </template>
@@ -234,6 +229,12 @@ export default {
           width: 50 * beCounted,
           name: 'sum',
           align: 'center'
+        },
+        {
+          title: '编辑',
+          width: 50 * beCounted,
+          name: 'option',
+          align: 'center'
         }
       ],
       list: [],
@@ -262,8 +263,12 @@ export default {
       // console.log(res)
       this.list = res.data
     },
-    onEdit() {
-      console.log('编辑')
+    onEdit(row) {
+      console.log('编辑', row)
+      for (const k in this.validateForm) {
+        this.validateForm[k] = row[k]
+      }
+      this.openFullscreen = true
     },
     onDelete() {
       this.$confirm('确定要删除？', '提示', {
@@ -322,7 +327,8 @@ export default {
           parseFloat(this.validateForm.media),
           parseFloat(this.validateForm.baise)
         ]
-        if (a && b && c && d && e) {
+        console.log(a, b, c, d, e)
+        if (typeof a === 'number' && typeof b === 'number' && typeof c === 'number' && typeof d === 'number' && typeof e === 'number') {
           this.validateForm.sum = (a + b + c + d + e).toString()
         }
       } catch (error) {

@@ -1,8 +1,8 @@
 <template>
   <div>
     <h3>
-      <!-- 公司活动达<span @click="$router.push({ path: '/table-o' })">成率</span> -->
-      公司活动达成率
+      <!-- 分公司活动达<span @click="$router.push({ path: '/table-o' })">成率</span> -->
+      分公司活动达成率
     </h3>
     <div
       style="margin: 0rem 0.4rem 0; border: 1px solid rgba(204, 204, 204, 0.52);"
