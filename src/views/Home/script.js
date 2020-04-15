@@ -15,7 +15,7 @@ const COLOR = [
   {
     gte: 0.7,
     lte: 1,
-    color: 'rgb(215, 33, 57)'
+    color: '#ff0000'
   },
   {
     gte: 0.5,
@@ -70,7 +70,7 @@ const visualMap = {
       gte: 0.7,
       lt: 1,
       label: '70%-99%',
-      color: 'rgb(215, 33, 57)'
+      color: '#ff0000'
     },
     {
       gte: 0.5,
